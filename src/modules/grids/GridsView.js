@@ -14,19 +14,17 @@ import { colors, fonts } from '../../styles';
 import { RadioGroup, GridRow } from '../../components';
 
 export default class GridsScreen extends React.Component {
-  _getRenderItemFunction = () =>
-    [this.renderRowOne, this.renderRowTwo, this.renderRowThree][
-      this.props.tabIndex
-    ];
+  _getRenderItemFunction = () => [this.renderRowAll, this.renderRowTop10][this.props.tabIndex]
 
-    _openArticle = article => {
-      this.props.navigation.navigate('Article', {
-        article,
-      });
-    };
+  _openArticle = article => {
+    this.props.navigation.navigate('Article', {
+      article,
+    });
+  };
   
 
   renderRowOne = rowData => {
+
     const cellViews = rowData.item.map(item => (
       <TouchableOpacity key={item.id} onPress={() => this._openArticle(item)}>
         <View style={styles.itemOneContainer}>
@@ -51,6 +49,7 @@ export default class GridsScreen extends React.Component {
         </View>
       </TouchableOpacity>
     ));
+
     return (
       <View key={rowData.item[0].id} style={styles.itemOneRow}>
         {cellViews}
@@ -58,7 +57,8 @@ export default class GridsScreen extends React.Component {
     );
   };
 
-  renderRowTwo = ({ item }) => (
+  renderRowAll = ({ item }) => (
+
     <TouchableOpacity
       key={item.id}
       style={styles.itemTwoContainer}
@@ -72,16 +72,18 @@ export default class GridsScreen extends React.Component {
         <Text style={styles.itemTwoPrice}>{item.price}</Text>
       </View>
     </TouchableOpacity>
+
   );
 
-  renderRowThree = ({ item }) => (
+  renderRowTop10 = ({ item }) => (
+
     <TouchableOpacity
       key={item.id}
       style={styles.itemThreeContainer}
       onPress={() => this._openArticle(item)}
     >
       <View style={styles.itemThreeSubContainer}>
-        <Image source={{ uri: item.image }} style={styles.itemThreeImage} />
+        {/* <Image source={{ uri: item.image }} style={styles.itemThreeImage} /> */}
         <View style={styles.itemThreeContent}>
           <Text style={styles.itemThreeBrand}>{item.brand}</Text>
           <View>
@@ -112,12 +114,13 @@ export default class GridsScreen extends React.Component {
       </View>
       <View style={styles.itemThreeHr} />
     </TouchableOpacity>
+
   );
 
   render() {
     const groupedData =
       this.props.tabIndex === 0
-        ? GridRow.groupByRows(this.props.data, 2)
+        ? GridRow.groupByRows(this.props.data, 1)
         : this.props.data;
 
     return (

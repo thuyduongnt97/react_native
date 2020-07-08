@@ -9,7 +9,7 @@ export default compose(
       if (Platform.OS === 'android') {
         // eslint-disable-next-line no-unused-expressions
         UIManager.setLayoutAnimationEnabledExperimental &&
-          UIManager.setLayoutAnimationEnabledExperimental(true);
+        UIManager.setLayoutAnimationEnabledExperimental(true);
       }
     },
   }),
