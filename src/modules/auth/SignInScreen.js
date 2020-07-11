@@ -7,20 +7,18 @@ import {
     Platform,
     StyleSheet ,
     StatusBar,
-    Alert,
-    ScrollView ,
-    SafeAreaView
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-
+// import bcrypt from "react-native-bcrypt";
 import { useTheme } from 'react-native-paper';
+// import isaac from "isaac";
 
-// import { AuthContext } from '../../components/context';
 
-// import Users from '../model/users';
+
+
 const SignInScreen = () => {
 
     const [data, setData] = React.useState({
@@ -37,21 +35,21 @@ const SignInScreen = () => {
     // const { signIn } = React.useContext(AuthContext);
 
     const textInputChange = (val) => {
-        // if( val.trim().length >= 4 ) {
-        //     setData({
-        //         ...data,
-        //         username: val,
-        //         check_textInputChange: true,
-        //         isValidUser: true
-        //     });
-        // } else {
-        //     setData({
-        //         ...data,
-        //         username: val,
-        //         check_textInputChange: false,
-        //         isValidUser: false
-        //     });
-        // }
+        if( val.trim().length >= 4 ) {
+            setData({
+                ...data,
+                username: val,
+                check_textInputChange: true,
+                isValidUser: true
+            });
+        } else {
+            setData({
+                ...data,
+                username: val,
+                check_textInputChange: false,
+                isValidUser: false
+            });
+        }
     }
 
     const handlePasswordChange = (val) => {
@@ -134,7 +132,7 @@ const SignInScreen = () => {
                             <FontAwesome 
                                 name="user-o"
                                 color={colors.text}
-                                size={20}
+                                size={35}
                             />
                             <TextInput 
                                 placeholder="Your Username"
@@ -159,21 +157,23 @@ const SignInScreen = () => {
                             : null}
                         </View>
                         { data.isValidUser ? null : 
-                        <Animatable.View animation="fadeInLeft" duration={500}>
-                        <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
-                        </Animatable.View>
+                            <Animatable.View animation="fadeInLeft" duration={500}>
+                            <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
+                            </Animatable.View>
                         }
                         
 
                         <Text style={[styles.text_footer, {
                             color: colors.text,
                             marginTop: 20
-                        }]}>Password</Text>
-                        <View style={styles.action}>
-                            <Feather 
+                            }]}>Password
+                        </Text>
+                            <View style={styles.action}>
+
+                            <FontAwesome 
                                 name="lock"
                                 color={colors.text}
-                                size={20}
+                                size={35}
                             />
                             <TextInput 
                                 placeholder="Your Password"
@@ -229,7 +229,37 @@ const SignInScreen = () => {
                             </TouchableOpacity>
 
                             <TouchableOpacity
-                                onPress={() => navigation.navigate('SignUpScreen')}
+                                onPress={() =>
+                                    {   
+                                    //     bcrypt.genSalt(10, function (err, salt) {
+                                    //         bcrypt.hash('B4c0/\/', salt, function (err, hash) {
+
+                                    //             console.log(hash)
+
+                                    //             // To check a password  
+                                    //             bcrypt.compare('B4c0/\/', hash, function (err, res) {
+                                    //                 // res == true
+                                    //                 console.log('equal')
+                                    //                 console.log(res)
+                                    //             })
+
+                                    //             bcrypt.compare('not_bacon', hash, function (err, res) {
+                                    //                 // res == false
+                                    //                 console.log('not equal')
+                                    //                 console.log(res)
+                                    //             })
+                                    //         })
+                                    //     })
+
+                                    // // Auto-gen a salt and hash
+                                    //     bcrypt.hash('bacon', 8, function (err, hash) {
+                                    //         console.log(`Auto-gen: ${hash}`)
+                                    //         alert(hash)
+                                    //     })
+                                        
+                                    }
+                                //  navigation.navigate('SignUpScreen')
+                                 }
                                 style={[styles.signIn, {
                                     borderColor: '#4666cd',
                                     borderWidth: 1,
@@ -262,7 +292,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
         paddingBottom: 15,
-        marginTop: -25
+        marginTop:-20 
     },
     footer: {
         flex: 4,
@@ -318,7 +348,7 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: 'center',
-        marginTop: 20
+        marginTop: 40
     },
     signIn: {
         width: '100%',

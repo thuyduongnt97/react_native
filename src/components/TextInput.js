@@ -10,55 +10,40 @@ const RNSTextInput = ({
   placeholderTextColor,
   ...restProps
 }) => {
-  const finalStyle = [
-    styles.default,
-    type === 'bordered' && styles.bordered,
-    dark && styles.dark,
-    style && style,
-  ];
-
+  
   return (
-    <View style={{ alignSelf: 'stretch', flexDirection: 'column' }}>
-      <TextInput
-        placeholderTextColor={placeholderTextColor || colors.white}
-        underlineColorAndroid="white"
-        {...restProps}
-        style={finalStyle}
-      />
-      {Platform.OS === 'ios' && (
-        <View style={{ height: 0.5, backgroundColor: 'white' }} />
-      )}
-    </View>
+    <TextInput 
+      placeholder="Your Password"
+      placeholderTextColor="#666666"
+      // secureTextEntry={data.secureTextEntry ? true : false}
+      style={[styles.textInput, {
+          color: colors.text
+      }]}
+      autoCapitalize="none"
+      // onChangeText={(val) => handlePasswordChange(val)}
+  />
   );
 };
 
-const HEIGHT = 40;
 
 const styles = StyleSheet.create({
-  default: {
-    height: HEIGHT,
-    color: 'white',
-    fontFamily: fonts.primaryRegular,
+  textInput: {
+    flex: 1,
+    paddingLeft: 10,
+    color: '#05375a',
     ...Platform.select({
-      android: {
-        paddingLeft: 5,
-        opacity: 0.9,
-      },
-    }),
-  },
-  bordered: {
-    borderWidth: 0.5,
-    borderColor: colors.lightGray,
-    borderRadius: 20,
-    paddingHorizontal: 20,
-  },
-  dark: {
-    color: colors.gray,
-  },
-  primary: {
-    borderRadius: HEIGHT / 2,
-    backgroundColor: 'transparent',
-  },
+        ios: {
+            marginTop: 0
+        },
+        android: {
+            marginTop: 0
+        },
+        default: {
+          // other platforms, web for example
+            marginTop: -12
+        }
+    })
+},
 });
 
 export default RNSTextInput;
