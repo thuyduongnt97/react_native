@@ -6,7 +6,7 @@ import { colors } from '../../styles';
 import tabNavigationData from './tabNavigationData';
 
 const Tab = createBottomTabNavigator();
-
+// menu bottom
 export default function BottomTabs() {
   return (
     <Tab.Navigator>

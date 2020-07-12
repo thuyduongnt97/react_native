@@ -6,6 +6,7 @@ import {
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import NavigatorView from './RootNavigation';
+import tabNavigationData from './tabNavigationData';
 
 import AvailableInFullVersion from '../../modules/availableInFullVersion/AvailableInFullVersionViewContainer';
 
@@ -17,26 +18,26 @@ const iconComponents = require('../../../assets/images/drawer/components.png');
 const iconSettings = require('../../../assets/images/drawer/settings.png');
 
 const drawerData = [
-  {
-    name: 'Home',
-    icon: iconHome,
-  },
-  {
-    name: 'Calendar',
-    icon: iconCalendar,
-  },
-  {
-    name: 'Grids',
-    icon: iconGrids,
-  },
-  {
-    name: 'Pages',
-    icon: iconPages,
-  },
-  {
-    name: 'Components',
-    icon: iconComponents,
-  },
+  // {
+  //   name: 'Home sdsdsd',
+  //   icon: iconHome,
+  // },
+  // {
+  //   name: 'Calendar',
+  //   icon: iconCalendar,
+  // },
+  // {
+  //   name: 'Grids',
+  //   icon: iconGrids,
+  // },
+  // {
+  //   name: 'Pages',
+  //   icon: iconPages,
+  // },
+  // {
+  //   name: 'Components',
+  //   icon: iconComponents,
+  // },
 ];
 
 const Drawer = createDrawerNavigator();
@@ -54,8 +55,10 @@ function CustomDrawerContent(props) {
           <Text style={{ color: '#4BC1FD' }}>Johndoe@gmail.com</Text>
         </View>
       </View>
+
+      {/* menu */}
       <View style={styles.divider} />
-      {drawerData.map((item, idx) => (
+      {tabNavigationData.map((item, idx) => (
         <DrawerItem
           key={`drawer_item-${idx+1}`}
           label={() => (
@@ -71,6 +74,8 @@ function CustomDrawerContent(props) {
           onPress={() => props.navigation.navigate(item.name)}
         />        
       ))}
+    {/* menu */}
+
       <View style={styles.divider} />
       <DrawerItem
         label={() => (

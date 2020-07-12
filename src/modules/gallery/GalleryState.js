@@ -73,16 +73,23 @@ const stubImages = [
   },
 ];
 
+
+
 // Initial state
 const initialState = {
   isLoading: false,
   images: [],
 };
 
+
+
+
 // Actions
 const START_IMAGES_LOADING = 'GalleryState/START_LOADING';
 const IMAGES_LOADED = 'GalleryState/IMAGES_LOADED';
 const CLEAR_IMAGES = 'GalleryState/CLEAR_IMAGES';
+
+
 
 // Action creators
 function startImagesLoading() {

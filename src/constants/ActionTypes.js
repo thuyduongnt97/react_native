@@ -1,0 +1,1 @@
+export const FETCH_LINK = "FETCH_LINKS";
