@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
 import {
   StyleSheet,
   View,
   TouchableOpacity,
   ImageBackground,
-} from 'react-native';
+} from 'react-native'
 
-import { fonts, colors } from '../../styles';
-import { Text } from '../../components/StyledText';
+import { fonts, colors } from '../../styles'
+import { Text } from '../../components/StyledText'
 
 export default function HomeScreen({ isExtended, setIsExtended }) {
   // const rnsUrl = 'https://reactnativestarter.com';
@@ -50,7 +50,7 @@ export default function HomeScreen({ isExtended, setIsExtended }) {
           <View style={styles.priceContainer}>
             <View style={{ flexDirection: 'row' }}>
               <Text white bold size={50} style={styles.price}>
-                {isExtended ? '$199.95' : '$49.95'}
+                {/* {isExtended ? '$199.95' : '$49.95'} */}
               </Text>
             </View>
             <TouchableOpacity

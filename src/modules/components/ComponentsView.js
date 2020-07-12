@@ -1,10 +1,10 @@
-import React from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import React from 'react'
+import { StyleSheet, View, Text, ScrollView } from 'react-native'
 
-import Icon from 'react-native-vector-icons/Entypo';
-import { colors, fonts } from '../../styles';
+import Icon from 'react-native-vector-icons/Entypo'
+import { colors, fonts } from '../../styles'
 
-import { Button, RadioGroup, Dropdown } from '../../components';
+import { Button, RadioGroup, Dropdown } from '../../components'
 
 export default function ComponentsScreen(props) {
   return (

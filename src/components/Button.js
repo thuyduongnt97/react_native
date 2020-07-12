@@ -1,5 +1,5 @@
-import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
+import React from 'react'
+import LinearGradient from 'react-native-linear-gradient'
 import {
   Image,
   StyleSheet,
