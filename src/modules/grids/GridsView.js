@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -6,18 +6,16 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Image,
   Dimensions,
 } from 'react-native';
 import { colors, fonts } from '../../styles';
 
-import { RadioGroup, GridRow } from '../../components';
+import { RadioGroup } from '../../components';
 
-export default class GridsScreen extends React.Component {
-  _getRenderItemFunction = () => [this.renderRow, this.renderRow][this.props.tabIndex]
+export default function GridsScreen (props) {
+  const [tabIndex, setTabIndex] = useState(0)
+  _getRenderItemFunction = () => [renderRow, renderRow][tabIndex]
 
-
-  
   _openArticle = article => {
     this.props.navigation.navigate('Article', {
       article,
@@ -31,16 +29,15 @@ export default class GridsScreen extends React.Component {
     <TouchableOpacity
       key={item.id}
       style={styles.itemThreeContainer}
-      onPress={() => this._openArticle(item)}
+      onPress={() => _openArticle(item)}
     >
       <View style={styles.itemThreeSubContainer}>
-        {/* <Image source={{ uri: item.image }} style={styles.itemThreeImage} /> */}
         <View style={styles.itemThreeContent}>
-          <Text style={styles.itemThreeBrand}>{item.brand}</Text>
+          <Text style={styles.itemThreeBrand}>{item.created_at}</Text>
           <View>
             <Text style={styles.itemThreeTitle}>{item.title}</Text>
             <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
-              {item.subtitle}
+              {item.title}
             </Text>
           </View>
           <View style={styles.itemThreeMetaContainer}>
@@ -48,14 +45,14 @@ export default class GridsScreen extends React.Component {
               <View
                 style={[
                   styles.badge,
-                  item.badge === 'NEW' ? { backgroundColor: colors.green } : { backgroundColor: colors.secondary },
+                  // item.badge === 'NEW' ? { backgroundColor: colors.green } : { backgroundColor: colors.secondary },
                 ]}
               >
                 <Text
                   style={{ fontSize: 10, color: colors.white }}
                   styleName="bright"
                 >
-                  {item.badge && item.badge }
+                  {/* {item.badge && item.badge } */}
                 </Text>
               </View>
            
@@ -68,36 +65,35 @@ export default class GridsScreen extends React.Component {
 
   );
 
-  render() {
-    const groupedData =
-      this.props.tabIndex === 0
-        ? this.props.data.rowAll: 
-        this.props.data.top10;
+  
+   
+    const {rowAll, tabs} = props;
 
     return (
       <View style={styles.container}>
+        {console.log(rowAll)}
         <View style={{ height: 50 }}>
           <RadioGroup
-            selectedIndex={this.props.tabIndex}
-            items={this.props.tabs}
-            onChange={this.props.setTabIndex}
+            selectedIndex={tabIndex}
+            items={tabs}
+            onChange={setTabIndex}
             underline
           />
         </View>
         <FlatList
           keyExtractor={item =>
             item.id
-              ? `${this.props.tabIndex}-${item.id}`
+              ? `${tabIndex}-${item.id}`
               : `${item[0] && item[0].id}`
           }
           style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
-          data={groupedData}
-          renderItem={this._getRenderItemFunction()}
+          data={rowAll}
+          renderItem={_getRenderItemFunction()}
         />
       </View>
     );
   }
-}
+
 
 const styles = StyleSheet.create({
   container: {
