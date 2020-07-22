@@ -67,7 +67,7 @@ export default function GridsScreen (props) {
 
   
    
-    const {rowAll, tabs} = props;
+    const {rowAll, tabs, top10} = props;
 
     return (
       <View style={styles.container}>

@@ -12,15 +12,16 @@ import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-// import bcrypt from "react-native-bcrypt";
 import { useTheme } from 'react-native-paper';
-// import isaac from "isaac";
+// import bcrypt from 'bcryptjs'
+// import md5 from 'md5';
+import base64 from 'react-native-base64'
 
 
 
 
 const SignInScreen = () => {
-
+    
     const [data, setData] = React.useState({
         username: '',
         password: '',
@@ -29,6 +30,7 @@ const SignInScreen = () => {
         isValidUser: true,
         isValidPassword: true,
     });
+    const [value, setValue] = React.useState('Useless Placeholder');
 
     const { colors } = useTheme();
     
@@ -69,10 +71,18 @@ const SignInScreen = () => {
     }
 
     const updateSecureTextEntry = () => {
-        // setData({
-        //     ...data,
-        //     secureTextEntry: !data.secureTextEntry
+        setData({
+            ...data,
+            secureTextEntry: !data.secureTextEntry
+        });
+        // var bcrypt = require('react-native-bcrypt');
+        // bcrypt.genSalt(12, function(err, salt) {
+        //     bcrypt.hash("251197", salt, function(err, hash) {
+        //         setValue(hash)
+        //         console.log(hash);
+        //     });
         // });
+        console.log(base64.encode('Some string to encode to base64')); 
     }
 
     const handleValidUser = (val) => {
@@ -143,6 +153,7 @@ const SignInScreen = () => {
                                 autoCapitalize="none"
                                 onChangeText={(val) => textInputChange(val)}
                                 onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+                                value={value}
                             />
                             {data.check_textInputChange ? 
                             <Animatable.View
@@ -231,32 +242,7 @@ const SignInScreen = () => {
                             <TouchableOpacity
                                 onPress={() =>
                                     {   
-                                    //     bcrypt.genSalt(10, function (err, salt) {
-                                    //         bcrypt.hash('B4c0/\/', salt, function (err, hash) {
-
-                                    //             console.log(hash)
-
-                                    //             // To check a password  
-                                    //             bcrypt.compare('B4c0/\/', hash, function (err, res) {
-                                    //                 // res == true
-                                    //                 console.log('equal')
-                                    //                 console.log(res)
-                                    //             })
-
-                                    //             bcrypt.compare('not_bacon', hash, function (err, res) {
-                                    //                 // res == false
-                                    //                 console.log('not equal')
-                                    //                 console.log(res)
-                                    //             })
-                                    //         })
-                                    //     })
-
-                                    // // Auto-gen a salt and hash
-                                    //     bcrypt.hash('bacon', 8, function (err, hash) {
-                                    //         console.log(`Auto-gen: ${hash}`)
-                                    //         alert(hash)
-                                    //     })
-                                        
+                                        updateSecureTextEntry()
                                     }
                                 //  navigation.navigate('SignUpScreen')
                                  }

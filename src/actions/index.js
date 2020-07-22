@@ -1,5 +1,8 @@
 import * as Types from '../constants/ActionTypes'
 import callApi from './../utils/apiCaller'
+import base64 from 'react-native-base64'
+
+
 const stubImages = [
     {
       id: 0,
@@ -75,13 +78,14 @@ const stubImages = [
     },
   ];
 
+
+
 //links
 function startLinksLoading() {
   return { type: Types.START_LINKS_LOADING };
 }
 
 const linksLoaded = (links) =>{
-  console.log("linksLoaded")
   return {
       type : Types.LINKS_LOADED,
       links
@@ -89,26 +93,64 @@ const linksLoaded = (links) =>{
 } 
 
 function clearLinks() {
-  return { type: Types.CLEAR_LICKS };
-}
-const getDataApi3 = async () =>{
-  const result = await callApi.getDataApi()
-  return result
+  return { type: Types.CLEAR_LINKS };
 }
 const actFetchLinksRequest = () => {
   return (dispatch) => {
-      return dispatch(linksLoaded(getDataApi3))
-      // callApi('links/43', 'GET', null).then(res => {
-      //     console.log("asdfasdf"+res)
-      //     dispatch(linksLoaded(res.data))
-      // })
+      return callApi('links/43', 'GET', null).then(res => {
+          dispatch(linksLoaded(res.data))
+      })
+      // dispatch(linksLoaded(getDataApi3))
   }
 }
+
+
 export function loadLinks() {
   return dispatch => {
       dispatch(startLinksLoading());
       // Connect to the API here
       dispatch(actFetchLinksRequest());
+  };
+}
+
+// export function refreshLinks() {
+//   return dispatch => {
+//       dispatch(startImagesLoading());
+//       dispatch(clearLinks());
+//       dispatch(actFetchLinksRequest());
+//   };
+// }
+
+
+
+
+//Login
+function startLogin(email) {
+  return { type: Types.START_LOGIN, email};
+}
+
+const login = (key_app) =>{
+  return {
+      type : Types.LINKS_LOADED,
+      key_app
+  }
+} 
+
+const actFetchLoginRequest = (email, pass) => {
+  var data = base64(email)+"."+base64(pass)
+  return (dispatch) => {
+    return callApi('login', 'POST', data).then(res => {
+        dispatch(linksLoaded(res.data))
+    })
+  }
+}
+
+
+export function loadLogin() {
+  return dispatch => {
+      dispatch(startLogin());
+      // Connect to the API here
+      dispatch(actFetchLoginRequest());
   };
 }
 
@@ -119,6 +161,8 @@ export function refreshLinks() {
       dispatch(actFetchLinksRequest());
   };
 }
+
+
 
 
 

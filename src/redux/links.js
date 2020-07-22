@@ -2,12 +2,12 @@ import * as Types from '../constants/ActionTypes'
 
 
 const initialState = {
-    isLoading: false,
-    tabs : ['ALL', 'TOP 10'],
-    rowAll : [ ],
-    top10: [ ]
- 
-  }
+  isLoading: false,
+  tabs : ['ALL', 'TOP 10'],
+  rowAll : [ ],
+  top10: [ ]
+
+}
 
 const links = (state = initialState, action) => {
     switch (action.type) {
@@ -21,7 +21,7 @@ const links = (state = initialState, action) => {
             isLoading: false,
             rowAll: action.links,
           });
-        case Types.CLEAR_LICKS:
+        case Types.CLEAR_LINKS:
           return Object.assign({}, state, {
             rowAll: [],
           });

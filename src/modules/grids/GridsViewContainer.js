@@ -9,6 +9,7 @@ export default  compose(
     state => ({
       isLoading: state.links.isLoading,
       rowAll: state.links.rowAll,
+      top10: state.links.top10,
       tabs:  state.links.tabs
     }),
     dispatch => ({
