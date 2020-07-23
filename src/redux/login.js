@@ -3,6 +3,7 @@ import * as Types from '../constants/ActionTypes'
 const initialState = {
     isLoading: false,
     email: '',
+    pass: '',
     key_app: ''
 }
 

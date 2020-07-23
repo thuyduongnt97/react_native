@@ -113,13 +113,13 @@ export function loadLinks() {
   };
 }
 
-// export function refreshLinks() {
-//   return dispatch => {
-//       dispatch(startImagesLoading());
-//       dispatch(clearLinks());
-//       dispatch(actFetchLinksRequest());
-//   };
-// }
+export function refreshLinks() {
+  return dispatch => {
+      dispatch(startLinksLoading());
+      dispatch(clearLinks());
+      dispatch(actFetchLinksRequest());
+  };
+}
 
 
 
@@ -131,7 +131,7 @@ function startLogin(email) {
 
 const login = (key_app) =>{
   return {
-      type : Types.LINKS_LOADED,
+      type : Types.lOGIN,
       key_app
   }
 } 
@@ -140,30 +140,20 @@ const actFetchLoginRequest = (email, pass) => {
   var data = base64(email)+"."+base64(pass)
   return (dispatch) => {
     return callApi('login', 'POST', data).then(res => {
-        dispatch(linksLoaded(res.data))
+        dispatch(login(res.data))
     })
   }
 }
 
 
-export function loadLogin() {
+export function loadLogin(email, pass) {
   return dispatch => {
       dispatch(startLogin());
       // Connect to the API here
-      dispatch(actFetchLoginRequest());
+      console.log("trong index action" + email+ pass);
+      dispatch(actFetchLoginRequest(email, pass));
   };
 }
-
-export function refreshLinks() {
-  return dispatch => {
-      dispatch(startImagesLoading());
-      dispatch(clearLinks());
-      dispatch(actFetchLinksRequest());
-  };
-}
-
-
-
 
 
 
