@@ -4,7 +4,7 @@ const initialState = {
     isLoading: false,
     email: '',
     pass: '',
-    key_app: ''
+    key_app: false
 }
 
 

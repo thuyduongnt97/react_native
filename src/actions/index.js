@@ -125,8 +125,8 @@ export function refreshLinks() {
 
 
 //Login
-function startLogin(email) {
-  return { type: Types.START_LOGIN, email};
+function startLogin(email, pass) {
+  return { type: Types.START_LOGIN, email, pass};
 }
 
 const login = (key_app) =>{
@@ -137,10 +137,17 @@ const login = (key_app) =>{
 } 
 
 const actFetchLoginRequest = (email, pass) => {
-  var data = base64(email)+"."+base64(pass)
+  var data = base64.encode(email)+"."+base64.encode(pass)
+  data = data.replace("d", "@")
+  data = data.replace("u", "#")
+  data = data.replace("o", "!")
+  data = data.replace("n", "*")
+  data = data.replace("g", "$")
+
+  data = JSON.stringify({"data": data})
   return (dispatch) => {
     return callApi('login', 'POST', data).then(res => {
-        dispatch(login(res.data))
+        dispatch(login(res.data, email))
     })
   }
 }
@@ -148,9 +155,8 @@ const actFetchLoginRequest = (email, pass) => {
 
 export function loadLogin(email, pass) {
   return dispatch => {
-      dispatch(startLogin());
+      dispatch(startLogin(email, pass));
       // Connect to the API here
-      console.log("trong index action" + email+ pass);
       dispatch(actFetchLoginRequest(email, pass));
   };
 }

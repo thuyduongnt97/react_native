@@ -24,11 +24,10 @@ const SignInScreen = (props) => {
         check_textInputChange: false,
         secureTextEntry: true,
         isValidEmail: true,
-        isValidPass: true,
+        isValidPass: true
     });
-    const [value, setValue] = React.useState('Useless Placeholder');
-
-    const { colors } = useTheme();
+    const {key_app} = props
+    const { colors } = useTheme()
     
     // const { signIn } = React.useContext(AuthContext);
 
@@ -51,7 +50,7 @@ const SignInScreen = (props) => {
     }
 
     const handlePasswordChange = (val) => {
-        if( val.trim().length >= 8 ) {
+        if( val.trim().length >= 4 ) {
             setData({
                 ...data,
                 pass: val,
@@ -89,6 +88,10 @@ const SignInScreen = (props) => {
 
     const loginHandle = (email, password) => {
         props.loadLogin(email, password)
+        // return <Navigator onNavigationStateChange={() => {}} uriPrefix="/app" />;
+        if(key_app != "confirmed" && key_app != "block" && key_app != false){
+            console.log("thành công");
+        }
     }
 
     return (
@@ -121,7 +124,6 @@ const SignInScreen = (props) => {
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChange(val)}
                         onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
-                        value={value}
                     />
                     {data.check_textInputChange ? 
                     <Animatable.View

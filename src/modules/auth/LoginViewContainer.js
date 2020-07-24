@@ -8,7 +8,7 @@ export default  compose(
       state => ({
         email: state.login.email,
         pass: state.login.pass,
-        key: state.login.key_app,
+        key_app: state.login.key_app,
       }),
       dispatch => ({
         loadLogin: (email, pass) => {

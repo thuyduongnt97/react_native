@@ -7,8 +7,8 @@ export default function  callApi (endpoint, method='GET', body) {
   // console.log("trong api")
   var config = {
     method: method,
-    url: `${apiConfig}/${endpoint}`,
-    headers: { 'Content-Type':  'application/x-www-form-urlencoded' },
+    url: `${apiConfig.API_URL}/${endpoint}`,
+    headers: { 'Content-Type':  'application/json' },
     data: body
   };
   // // try {
