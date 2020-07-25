@@ -7,7 +7,7 @@ import { colors } from './src/styles';
 
 import { store, persistor } from './src/redux/store';
 
-import AppView from './src/modules/AppViewContainer';
+import AppLogin from './src/modules/AppLoginContainer';
 
 export default function App() {
   return (
@@ -22,7 +22,7 @@ export default function App() {
           }
           persistor={persistor}
         >
-          <AppView />
+          <AppLogin />
         </PersistGate>
       </NavigationContainer>
     </Provider>

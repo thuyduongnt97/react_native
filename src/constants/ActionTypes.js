@@ -1,6 +1,7 @@
 //login
 export const START_LOGIN = 'START_LOGIN';
 export const lOGIN = 'lOGIN';
+export const LOAD_KEY = 'LOAD_KEY';
 
 
 //LOAD LINK

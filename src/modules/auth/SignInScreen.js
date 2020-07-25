@@ -8,16 +8,15 @@ import {
     StyleSheet ,
     StatusBar,
 } from 'react-native';
-import PropTypes from 'prop-types'
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
-import base64 from 'react-native-base64';
+import AppView from './../AppViewContainer';
 
 const SignInScreen = (props) => {
-   
+    
     const [data, setData] = React.useState({
         email: '',
         pass: '',
@@ -87,13 +86,17 @@ const SignInScreen = (props) => {
     }
 
     const loginHandle = (email, password) => {
-        props.loadLogin(email, password)
-        // return <Navigator onNavigationStateChange={() => {}} uriPrefix="/app" />;
-        if(key_app != "confirmed" && key_app != "block" && key_app != false){
-            console.log("thành công");
-        }
+        <AppView />
+        // props.loadLogin(email, password)
+        // if(key_app != "confirmed" && key_app != "block" && key_app != false){
+        //     <AppView />
+        // }
     }
-
+    const FunctionToOpenSecondActivity = () =>
+    {
+        this.props.navigation.navigate('Second');
+        
+    }
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor='#2d56d2' barStyle="light-content"/>

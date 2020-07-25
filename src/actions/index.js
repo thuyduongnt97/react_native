@@ -130,6 +130,7 @@ function startLogin(email, pass) {
 }
 
 const login = (key_app) =>{
+  // console.log("login: "+key_app);
   return {
       type : Types.lOGIN,
       key_app
@@ -147,7 +148,8 @@ const actFetchLoginRequest = (email, pass) => {
   data = JSON.stringify({"data": data})
   return (dispatch) => {
     return callApi('login', 'POST', data).then(res => {
-        dispatch(login(res.data, email))
+        console.log(res.data.result)
+        dispatch(login(res.data.result))
     })
   }
 }
@@ -155,14 +157,11 @@ const actFetchLoginRequest = (email, pass) => {
 
 export function loadLogin(email, pass) {
   return dispatch => {
-      dispatch(startLogin(email, pass));
+     dispatch(startLogin(email, pass));
       // Connect to the API here
       dispatch(actFetchLoginRequest(email, pass));
   };
 }
-
-
-
 //template Image
 
 function startImagesLoading() {
