@@ -9,9 +9,6 @@ export default  compose(
         key_app: state.login.key_app,
       }),
       dispatch => ({
-        // loadKey: () =>{
-        //   dispatch(loadKey())
-        // },
         loadLogin: (email, pass) => {
             dispatch(loadLogin(email, pass))
         },

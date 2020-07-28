@@ -4,7 +4,7 @@ const initialState = {
     isLoading: false,
     email: '',
     pass: '',
-    key_app: false
+    key_app: "9fc95c9b705aba7c57814eaa09845e44$2y$10$RgS3jnDRScA3SiEkNK59Pe1/N/w/krSymyqEkWxHQjHujAsb6CQUm"
 }
 
 

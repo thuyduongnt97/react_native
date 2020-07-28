@@ -86,6 +86,7 @@ function startLinksLoading() {
 }
 
 const linksLoaded = (links) =>{
+
   return {
       type : Types.LINKS_LOADED,
       links
@@ -95,29 +96,29 @@ const linksLoaded = (links) =>{
 function clearLinks() {
   return { type: Types.CLEAR_LINKS };
 }
-const actFetchLinksRequest = () => {
+const actFetchLinksRequest = (key_app) => {
+  key_app = JSON.stringify({"data": key_app})
   return (dispatch) => {
-      return callApi('links/43', 'GET', null).then(res => {
-          dispatch(linksLoaded(res.data))
+      return callApi('getlink', 'POST', key_app).then(res => {
+          dispatch(linksLoaded(Object.values(res.data.links)))
       })
-      // dispatch(linksLoaded(getDataApi3))
   }
 }
 
 
-export function loadLinks() {
+export function loadLinks(key_app) {
   return dispatch => {
       dispatch(startLinksLoading());
       // Connect to the API here
-      dispatch(actFetchLinksRequest());
+      dispatch(actFetchLinksRequest(key_app));
   };
 }
 
-export function refreshLinks() {
+export function refreshLinks(key_app) {
   return dispatch => {
       dispatch(startLinksLoading());
       dispatch(clearLinks());
-      dispatch(actFetchLinksRequest());
+      dispatch(actFetchLinksRequest(key_app));
   };
 }
 

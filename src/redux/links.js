@@ -12,7 +12,6 @@ const initialState = {
 const links = (state = initialState, action) => {
     switch (action.type) {
         case Types.START_LINKS_LOADING:
-          console.log(Types.START_LINKS_LOADING)
           return Object.assign({}, state, {
             isLoading: true,
           });
@@ -20,6 +19,7 @@ const links = (state = initialState, action) => {
           return Object.assign({}, state, {
             isLoading: false,
             rowAll: action.links,
+            top10: action.links.sort((a,b) => b.counting - a.counting)
           });
         case Types.CLEAR_LINKS:
           return Object.assign({}, state, {

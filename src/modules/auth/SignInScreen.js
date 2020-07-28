@@ -86,11 +86,11 @@ const SignInScreen = (props) => {
     }
 
     const loginHandle = (email, password) => {
-        <AppView />
-        // props.loadLogin(email, password)
-        // if(key_app != "confirmed" && key_app != "block" && key_app != false){
-        //     <AppView />
-        // }
+        // <AppView />
+        props.loadLogin(email, password)
+        if(key_app != "confirmed" && key_app != "block" && key_app != false){
+            <AppView />
+        }
     }
     const FunctionToOpenSecondActivity = () =>
     {
