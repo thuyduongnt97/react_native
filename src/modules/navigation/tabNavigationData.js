@@ -12,11 +12,11 @@ const iconPages = require('../../../assets/images/tabbar/pages.png');
 const iconComponents = require('../../../assets/images/tabbar/components.png');
 
 const tabNavigationData = [
-  {
-    name: 'Login',
-    component: LoginScreen,
-    icon: iconHome,
-  },
+  // {
+  //   name: 'Login',
+  //   component: LoginScreen,
+  //   icon: iconHome,
+  // },
   {
     name: 'Home',
     component: HomeScreen,

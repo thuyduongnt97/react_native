@@ -13,7 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
-import AppView from './../AppViewContainer';
+// import AppView from './../AppViewContainer';
 
 const SignInScreen = (props) => {
     
@@ -29,7 +29,11 @@ const SignInScreen = (props) => {
     const { colors } = useTheme()
     
     // const { signIn } = React.useContext(AuthContext);
-
+    // _openArticle = (article) => {
+    //     props.navigation.navigate('Article', {
+    //       article,
+    //     });
+    //   };
     const textInputChange = (val) => {
         if( val.trim().length >= 4 ) {
             setData({
@@ -86,15 +90,14 @@ const SignInScreen = (props) => {
     }
 
     const loginHandle = (email, password) => {
-        // <AppView />
+        // props.navigation.navigate('AppView');
         props.loadLogin(email, password)
         if(key_app != "confirmed" && key_app != "block" && key_app != false){
-            <AppView />
+            // _openArticle()
         }
     }
     const FunctionToOpenSecondActivity = () =>
     {
-        this.props.navigation.navigate('Second');
         
     }
     return (

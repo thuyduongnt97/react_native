@@ -85,22 +85,23 @@ function startLinksLoading() {
   return { type: Types.START_LINKS_LOADING };
 }
 
-const linksLoaded = (links) =>{
-
+const linksLoaded = (data) =>{
   return {
       type : Types.LINKS_LOADED,
-      links
+      data
   }
 } 
 
 function clearLinks() {
   return { type: Types.CLEAR_LINKS };
 }
+
+
 const actFetchLinksRequest = (key_app) => {
   key_app = JSON.stringify({"data": key_app})
   return (dispatch) => {
       return callApi('getlink', 'POST', key_app).then(res => {
-          dispatch(linksLoaded(Object.values(res.data.links)))
+        dispatch(linksLoaded(res.data))
       })
   }
 }
@@ -149,7 +150,7 @@ const actFetchLoginRequest = (email, pass) => {
   data = JSON.stringify({"data": data})
   return (dispatch) => {
     return callApi('login', 'POST', data).then(res => {
-        console.log(res.data.result)
+        console.log("callAPi");
         dispatch(login(res.data.result))
     })
   }

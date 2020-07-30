@@ -4,7 +4,7 @@ import { TouchableOpacity, Image } from 'react-native';
 import TabNavigator from './MainTabNavigator';
 import GalleryScreen from '../gallery/GalleryViewContainer';
 import AvailableInFullVersion from '../../modules/availableInFullVersion/AvailableInFullVersionViewContainer';
-
+// import AppView from './../AppViewContainer'
 // import ProfileScreen from '../profile/ProfileViewContainer';
 // import ArticleScreen from '../article/ArticleViewContainer';
 // import ChatScreen from '../chat/ChatViewContainer';
@@ -91,6 +91,17 @@ const StackNavigationData = [
       fontSize: 18,
     },
   },
+  // {
+  //   name: 'AppView',
+  //   component: AppView,
+  //   headerLeft: headerLeftComponent,
+  //   headerBackground: { source: headerBackground },
+  //   headerTitleStyle: {
+  //     fontFamily: fonts.primaryRegular,
+  //     color: colors.white,
+  //     fontSize: 18,
+  //   },
+  // },
   {
     name: 'Chat',
     component: AvailableInFullVersion,
