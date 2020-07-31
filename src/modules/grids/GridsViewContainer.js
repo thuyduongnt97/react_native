@@ -2,7 +2,7 @@ import { compose, lifecycle, withState } from 'recompose';
 import { connect } from 'react-redux';
 
 import GridView from './GridsView';
-import { loadLinks, refreshLinks } from './../../actions/index';
+import { loadLinks, refreshLinks, getLinkID } from './../../actions/index';
 
 export default  compose(
   connect(
@@ -16,6 +16,7 @@ export default  compose(
     dispatch => ({
       loadlinks: (key_app) => dispatch(loadLinks(key_app)),
       refreshLinks: (key_app) => dispatch(refreshLinks(key_app)),
+      getLinkID: (id) => dispatch(getLinkID(id)),
     }),
   ),
   lifecycle({

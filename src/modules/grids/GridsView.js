@@ -8,19 +8,18 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+// import VegaScrollList from 'react-native-vega-scroll-list';
+
 import { colors, fonts } from '../../styles';
 
 import { RadioGroup } from '../../components';
 
 export default class  GridsScreen extends React.Component {
-
-  // const {rowAll, tabs, top10} = props;
-  // const [tabIndex, setTabIndex] = useState(0)
-  // const [groupedData, setGroupedData] = useState(rowAll);
   _getRenderItemFunction = () => [this.renderRow, this.renderRow][this.props.tabIndex]
 
   _openArticle = (article) => {
-    props.navigation.navigate('Article', {
+    this.props.getLinkID(article.id)
+    this.props.navigation.navigate('Article', {
       article,
     });
   };
@@ -28,7 +27,7 @@ export default class  GridsScreen extends React.Component {
     <TouchableOpacity
       key={item.id}
       style={styles.itemThreeContainer}
-      onPress={() => _openArticle(item)}
+      onPress={() => this._openArticle(item)}
     >
       <View style={styles.itemThreeSubContainer}>
         <View style={styles.itemThreeContent}>
@@ -74,11 +73,10 @@ export default class  GridsScreen extends React.Component {
             onChange={this.props.setTabIndex}
             underline
           />
-          {console.log("RowAll ")}
-          {console.log(this.props.rowAll)}
         </View>
         <FlatList
-          keyExtractor={item => item.id}
+          distanceBetweenItem = {12}
+          keyExtractor={(item, index) => index.toString()}
           style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
           data={groupedData}
           renderItem={this._getRenderItemFunction()}
