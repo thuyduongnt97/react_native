@@ -3,14 +3,18 @@ import { combineReducers } from 'redux';
 // ## Generator Reducer Imports
 import gallery from './GalleryState';
 import app from '../modules/AppState';
-import calendar from '../modules/calendar/CalendarState';
+import calendar from '../modules/calendar/CalendarState'
 
+import login from './login'
 import links from './links'
+import chart from './chart';
 
 export default combineReducers({
   // ## Generator Reducers
   gallery,
   app,
   calendar,
-  links
+  login,
+  links,
+  chart,
 });

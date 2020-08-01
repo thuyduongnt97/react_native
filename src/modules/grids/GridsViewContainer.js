@@ -1,24 +1,28 @@
-import { compose, lifecycle } from 'recompose';
+import { compose, lifecycle, withState } from 'recompose';
 import { connect } from 'react-redux';
 
 import GridView from './GridsView';
-import { loadLinks, refreshLinks } from './../../actions/index';
+import { loadLinks, refreshLinks, getLinkID } from './../../actions/index';
 
 export default  compose(
   connect(
     state => ({
       isLoading: state.links.isLoading,
       rowAll: state.links.rowAll,
-      tabs:  state.links.tabs
+      top10: state.links.top10,
+      tabs:  state.links.tabs,
+      key_app: state.login.key_app,
     }),
     dispatch => ({
-      loadlinks: () => dispatch(loadLinks()),
-      refreshLinks: () => dispatch(refreshLinks()),
+      loadlinks: (key_app) => dispatch(loadLinks(key_app)),
+      refreshLinks: (key_app) => dispatch(refreshLinks(key_app)),
+      getLinkID: (id) => dispatch(getLinkID(id)),
     }),
   ),
   lifecycle({
     componentDidMount() {
-      this.props.loadlinks();
+      this.props.loadlinks(this.props.key_app)
     },
   }),
+  withState('tabIndex', 'setTabIndex', 0)
 )(GridView);
