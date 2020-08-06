@@ -19,7 +19,7 @@ import {
 
 export default function AvailableInFullVersionScreen(props) {
   const screenWidth = Dimensions.get("window").width - 10;
-  const {categories, data_series_total_click} = props
+  const {categories, data_series_total_click, data_referer} = props
   const item = props.route.params.article
   const data = {
     labels: categories,
@@ -36,7 +36,7 @@ export default function AvailableInFullVersionScreen(props) {
       source={require('../../../assets/images/background.png')}
       style={styles.itemThreeContent}
     >
-    {console.log(categories)}
+    {console.log(data_referer)}
       <View style={styles.itemThreeSubContainer}>
         <View style={styles.itemThreeContent}>
           <Text style={styles.itemThreeBrand}>{Moment(item.created_at).format("MMM Do YY")}{item.id}</Text>
@@ -73,6 +73,18 @@ export default function AvailableInFullVersionScreen(props) {
           verticalLabelRotation={35}//độ nghiêng của label
         />
       </View>
+      <View style={styles.container_chart}>
+      <PieChart
+        data={data}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute
+      />
+      </View>
     </ImageBackground>
   );
 }
@@ -81,9 +93,9 @@ const chartConfig = {
   backgroundGradientFromOpacity: 1.5,
   backgroundGradientTo: "#08130D",
   backgroundGradientToOpacity: 1,
-  color: (opacity = 4) => `rgba(0, 255, 0, ${opacity})`,
-  strokeWidth: 1, // optional, default 3
-  barPercentage: 0.3,
+  color: (opacity = 6) => `rgba(0, 255, 0, ${opacity})`,
+  strokeWidth: 2, // optional, default 3
+  barPercentage: 0.2,
   useShadowColorFromDataset: false, // optional
   
 };
