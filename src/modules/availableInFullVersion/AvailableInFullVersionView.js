@@ -15,11 +15,12 @@ import { Button } from '../../components';
 import Moment from 'moment';
 import {
   BarChart,
+  PieChart
 } from "react-native-chart-kit";
 
 export default function AvailableInFullVersionScreen(props) {
   const screenWidth = Dimensions.get("window").width - 10;
-  const {categories, data_series_total_click, data_referer} = props
+  const {categories, data_series_total_click, data_referer, data_location, data_os, data_browser} = props
   const item = props.route.params.article
   const data = {
     labels: categories,
@@ -32,11 +33,11 @@ export default function AvailableInFullVersionScreen(props) {
     ]
   };
   return (
-    <ImageBackground
-      source={require('../../../assets/images/background.png')}
-      style={styles.itemThreeContent}
-    >
-    {console.log(data_referer)}
+    // <ImageBackground
+    //   source={require('../../../assets/images/background.png')}
+    //   style={styles.itemThreeContent}
+    // >
+    <ScrollView>
       <View style={styles.itemThreeSubContainer}>
         <View style={styles.itemThreeContent}>
           <Text style={styles.itemThreeBrand}>{Moment(item.created_at).format("MMM Do YY")}{item.id}</Text>
@@ -75,7 +76,7 @@ export default function AvailableInFullVersionScreen(props) {
       </View>
       <View style={styles.container_chart}>
       <PieChart
-        data={data}
+        data={data_referer}
         width={screenWidth}
         height={220}
         chartConfig={chartConfig}
@@ -85,8 +86,44 @@ export default function AvailableInFullVersionScreen(props) {
         absolute
       />
       </View>
-    </ImageBackground>
-  );
+      <View style={styles.container_chart}>
+      <PieChart
+        data={data_location}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute
+      />
+      </View>
+      <View style={styles.container_chart}>
+      <PieChart
+        data={data_os}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute
+      />
+      </View>
+      <View style={styles.container_chart}>
+      <PieChart
+        data={data_browser}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute
+      />
+      </View>
+    </ScrollView>  
+);
 }
 const chartConfig = {
   backgroundGradientFrom: "#1E2923",
