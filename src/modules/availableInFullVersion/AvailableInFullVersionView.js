@@ -7,40 +7,40 @@ import {
   ImageBackground,
   Linking,
   Dimensions ,
+  ScrollView
 } from 'react-native';
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart
-} from "react-native-chart-kit";
+
 import { fonts, colors } from '../../styles';
 import { Button } from '../../components';
 import Moment from 'moment';
+import {
+  BarChart,
+  PieChart
+} from "react-native-chart-kit";
 
 export default function AvailableInFullVersionScreen(props) {
-  const {data_referer, data_location, data_os, data_browser, data_click, data_series_total_click, list_date_categories, link_history} = props
+  const screenWidth = Dimensions.get("window").width - 10;
+  const {categories, data_series_total_click, data_referer, data_location, data_os, data_browser} = props
   const item = props.route.params.article
   const data = {
-    labels: Object.values(list_date_categories),
+    labels: categories,
     datasets: [
       {
-        data: Object.values(data_series_total_click)
+        data: Object.values(data_series_total_click),
+        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
+        strokeWidth: 2 // optional
       }
     ]
   };
-  
   return (
-    <ImageBackground
-      source={require('../../../assets/images/background.png')}
-      style={styles.itemThreeContent}
-    >
-    {console.log(Object.values(list_date_categories))}
+    // <ImageBackground
+    //   source={require('../../../assets/images/background.png')}
+    //   style={styles.itemThreeContent}
+    // >
+    <ScrollView>
       <View style={styles.itemThreeSubContainer}>
         <View style={styles.itemThreeContent}>
-          <Text style={styles.itemThreeBrand}>{Moment(item.created_at).format("MMM Do YY")}</Text>
+          <Text style={styles.itemThreeBrand}>{Moment(item.created_at).format("MMM Do YY")}{item.id}</Text>
           <View>
             <Text style={styles.itemThreeTitle}>{item.title}</Text>
             <Text style={styles.itemThreeSubtitle} numberOfLines={2}>
@@ -64,40 +64,91 @@ export default function AvailableInFullVersionScreen(props) {
           </View>
         </View>
       </View>
-      <View>
+      <View style={styles.container_chart}>
         <BarChart
-          // style={graphStyle}
           data={data}
-          width={Dimensions.get("window").width}
-          height={220}
-          yAxisLabel="$"
+          width={screenWidth}
+          height={320}
+          yAxisLabel=""
           chartConfig={chartConfig}
-          verticalLabelRotation={30}
+          verticalLabelRotation={35}//độ nghiêng của label
         />
       </View>
-    </ImageBackground>
-  );
+      <View style={styles.container_chart}>
+      <PieChart
+        data={data_referer}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute
+      />
+      </View>
+      <View style={styles.container_chart}>
+      <PieChart
+        data={data_location}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute
+      />
+      </View>
+      <View style={styles.container_chart}>
+      <PieChart
+        data={data_os}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute
+      />
+      </View>
+      <View style={styles.container_chart}>
+      <PieChart
+        data={data_browser}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        accessor="population"
+        backgroundColor="transparent"
+        paddingLeft="15"
+        absolute
+      />
+      </View>
+    </ScrollView>  
+);
 }
-
-
 const chartConfig = {
   backgroundGradientFrom: "#1E2923",
-  backgroundGradientFromOpacity: 0,
+  backgroundGradientFromOpacity: 1.5,
   backgroundGradientTo: "#08130D",
-  backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+  backgroundGradientToOpacity: 1,
+  color: (opacity = 6) => `rgba(0, 255, 0, ${opacity})`,
   strokeWidth: 2, // optional, default 3
-  barPercentage: 0.5,
-  useShadowColorFromDataset: false // optional
+  barPercentage: 0.2,
+  useShadowColorFromDataset: false, // optional
+  
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     paddingHorizontal: 30,
-    paddingVertical: 50,
+    paddingVertical: 10,
     justifyContent: 'space-around',
+    padding: 5,
+  },
+  container_chart: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   nerdImage: {
     width: 80,
