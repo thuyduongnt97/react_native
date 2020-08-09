@@ -15,6 +15,9 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
 import AppView from './../AppViewContainer';
 
+import { createStackNavigator } from '@react-navigation/stack';
+const Stack = createStackNavigator();
+
 const SignInScreen = (props) => {
     
     const [data, setData] = React.useState({
@@ -86,11 +89,19 @@ const SignInScreen = (props) => {
     }
 
     const loginHandle = (email, password) => {
-        <AppView />
-        // props.loadLogin(email, password)
-        // if(key_app != "confirmed" && key_app != "block" && key_app != false){
-        //     <AppView />
-        // }
+        props.navigation.navigate('./../AppViewContainer')
+        // return (
+        //     <NavigationContainer>
+        //         <Stack.Navigator>
+        //             <Stack.Screen name="Home" component={HomeScreen} />
+        //         </Stack.Navigator>
+        //     </NavigationContainer>
+        // )
+        // // <AppView />
+        // // props.loadLogin(email, password)
+        // // if(key_app != "confirmed" && key_app != "block" && key_app != false){
+        // //     <AppView />
+        // // }
     }
     const FunctionToOpenSecondActivity = () =>
     {
