@@ -1,16 +1,12 @@
 import { compose, lifecycle, withState } from 'recompose';
 import { connect } from 'react-redux';
 
-import GridView from './GridsView';
+import GroupsView from './GroupsView';
 import { loadLinks, refreshLinks, getLinkID } from './../../actions/index';
 
 export default  compose(
   connect(
     state => ({
-      isLoading: state.links.isLoading,
-      rowAll: state.links.rowAll,
-      top10: state.links.top10,
-      tabs:  state.links.tabs,
       key_app: state.login.key_app,
     }),
     dispatch => ({
@@ -25,4 +21,4 @@ export default  compose(
     },
   }),
   withState('tabIndex', 'setTabIndex', 0)
-)(GridView);
+)(GroupsView);

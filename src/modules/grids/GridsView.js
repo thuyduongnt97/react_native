@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,32 +8,30 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+// import VegaScrollList from 'react-native-vega-scroll-list';
+
 import { colors, fonts } from '../../styles';
 
 import { RadioGroup } from '../../components';
 
-export default function GridsScreen (props) {
-  const [tabIndex, setTabIndex] = useState(0)
-  _getRenderItemFunction = () => [renderRow, renderRow][tabIndex]
+export default class  GridsScreen extends React.Component {
+  _getRenderItemFunction = () => [this.renderRow, this.renderRow][this.props.tabIndex]
 
-  _openArticle = article => {
+  _openArticle = (article) => {
+    this.props.getLinkID(article.id)
     this.props.navigation.navigate('Article', {
       article,
     });
   };
-  
-  
-
-  renderRow = ({ item }) => (
-
+  renderRow = ({item}) =>(
     <TouchableOpacity
       key={item.id}
       style={styles.itemThreeContainer}
-      onPress={() => _openArticle(item)}
+      onPress={() => this._openArticle(item)}
     >
       <View style={styles.itemThreeSubContainer}>
         <View style={styles.itemThreeContent}>
-          <Text style={styles.itemThreeBrand}>{item.created_at}</Text>
+          <Text style={styles.itemThreeBrand}>{item.id}</Text>
           <View>
             <Text style={styles.itemThreeTitle}>{item.title}</Text>
             <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
@@ -45,56 +43,48 @@ export default function GridsScreen (props) {
               <View
                 style={[
                   styles.badge,
-                  // item.badge === 'NEW' ? { backgroundColor: colors.green } : { backgroundColor: colors.secondary },
                 ]}
               >
                 <Text
                   style={{ fontSize: 10, color: colors.white }}
                   styleName="bright"
                 >
-                  {/* {item.badge && item.badge } */}
                 </Text>
               </View>
            
-            <Text style={styles.itemThreePrice}>{item.price}</Text>
+            <Text style={styles.itemThreePrice}>{item.counting}</Text>
           </View>
         </View>
       </View>
       <View style={styles.itemThreeHr} />
     </TouchableOpacity>
-
   );
-
-  
-   
-    const {rowAll, tabs, top10} = props;
-
+  render(){
+    const groupedData =
+    this.props.tabIndex === 0
+      ? this.props.rowAll
+      : this.props.top10;
     return (
       <View style={styles.container}>
-        {console.log(rowAll)}
         <View style={{ height: 50 }}>
           <RadioGroup
-            selectedIndex={tabIndex}
-            items={tabs}
-            onChange={setTabIndex}
+            selectedIndex={this.props.tabIndex}
+            items={this.props.tabs}
+            onChange={this.props.setTabIndex}
             underline
           />
         </View>
         <FlatList
-          keyExtractor={item =>
-            item.id
-              ? `${tabIndex}-${item.id}`
-              : `${item[0] && item[0].id}`
-          }
+          distanceBetweenItem = {12}
+          keyExtractor={(item, index) => index.toString()}
           style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
-          data={rowAll}
-          renderItem={_getRenderItemFunction()}
+          data={groupedData}
+          renderItem={this._getRenderItemFunction()}
         />
       </View>
     );
   }
-
-
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -186,7 +176,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   itemThreeSubContainer: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     paddingVertical: 10,
   },
   itemThreeImage: {

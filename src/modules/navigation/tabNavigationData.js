@@ -29,7 +29,7 @@ const tabNavigationData = [
   },
  
   {
-    name: 'Grids',
+    name: 'Dashboard',
     component: GridsScreen,
     icon: iconGrids,
   },
