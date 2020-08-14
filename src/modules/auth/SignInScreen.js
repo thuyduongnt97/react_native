@@ -15,6 +15,9 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useTheme } from 'react-native-paper';
 import AppView from './../AppViewContainer';
 
+import { createStackNavigator } from '@react-navigation/stack';
+const Stack = createStackNavigator();
+
 const SignInScreen = (props) => {
     
     const [data, setData] = React.useState({

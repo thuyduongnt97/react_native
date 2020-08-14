@@ -21,12 +21,9 @@ function clearChart() {
 const actFetchChartRequest = (id) => {
     id = id+""
     var linkID = base64.encode(id)
-    console.log(linkID);
     linkID = JSON.stringify({"linkID": linkID})
-    console.log(linkID)
     return (dispatch) => {
         return callApi('getlink-chart', 'POST', linkID).then(res => {
-            console.log(res.data);
             dispatch(chartLoaded(res.data))
         })
     }

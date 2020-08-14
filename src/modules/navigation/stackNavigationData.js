@@ -4,7 +4,9 @@ import { TouchableOpacity, Image } from 'react-native';
 import TabNavigator from './MainTabNavigator';
 import GalleryScreen from '../gallery/GalleryViewContainer';
 import AvailableInFullVersion from '../../modules/availableInFullVersion/AvailableInFullVersionViewContainer';
-
+import GridsScreen from './../grids/GridsViewContainer'
+import GroupDetailScreen from './../group/groupdetail/GroupDetailViewContainer';
+import Icon from 'react-native-vector-icons/FontAwesome'
 // import ProfileScreen from '../profile/ProfileViewContainer';
 // import ArticleScreen from '../article/ArticleViewContainer';
 // import ChatScreen from '../chat/ChatViewContainer';
@@ -13,6 +15,8 @@ import AvailableInFullVersion from '../../modules/availableInFullVersion/Availab
 // import AuthScreen from '../auth/AuthViewContainer';
 
 import { colors, fonts } from '../../styles';
+import GridsViewContainer from './../grids/GridsViewContainer';
+import UsersViewContainer from '../group/users/UsersViewContainer';
 
 const headerLeftComponent = (props) => {
   return (
@@ -57,10 +61,11 @@ const StackNavigationData = [
       color: colors.white,
       fontSize: 18,
     },
+   
   },
   {
-    name: 'Gallery',
-    component: GalleryScreen,
+    name: 'Link',
+    component: GridsScreen,
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },
     headerTitleStyle: {
@@ -70,8 +75,8 @@ const StackNavigationData = [
     },
   },
   {
-    name: 'Profile',
-    component: AvailableInFullVersion,
+    name: 'UsersGroup',
+    component: UsersViewContainer,
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },
     headerTitleStyle: {
@@ -91,6 +96,29 @@ const StackNavigationData = [
       fontSize: 18,
     },
   },
+  {
+    name: 'GroupDetail',
+    component: GroupDetailScreen,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+    headerTitleStyle: {
+      fontFamily: fonts.primaryRegular,
+      color: colors.white,
+      fontSize: 18,
+    },
+  },
+  {
+    name: 'LinksGroup',
+    component: GridsViewContainer,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+    headerTitleStyle: {
+      fontFamily: fonts.primaryRegular,
+      color: colors.white,
+      fontSize: 18,
+    },
+  },
+  
   {
     name: 'Chat',
     component: AvailableInFullVersion,

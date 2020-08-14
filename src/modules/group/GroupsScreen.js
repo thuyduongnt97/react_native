@@ -8,71 +8,62 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-
+// import VegaScrollList from 'react-native-vega-scroll-list';
+import Moment from 'moment';
 import { colors, fonts } from '../../styles';
 
-import { RadioGroup } from '../../components';
-import { isSet, isNull } from 'lodash';
 
-export default class  GridsScreen extends React.Component {
-  _getRenderItemFunction = () => [this.renderRow, this.renderRow][this.props.tabIndex]
 
-  _openArticle = (article) => {
-    this.props.getLinkID(article.id)
-    this.props.navigation.navigate('Article', {
+
+export default function GroupsScreen (props) {
+  const _openArticle = (article) => {
+    props.getGroupID(article.id)
+    props.navigation.navigate('GroupDetail', {
       article,
     });
   };
-  renderRow = ({item}) =>(
+  
+  const renderRow = ({item}) =>(
     <TouchableOpacity
       key={item.id}
       style={styles.itemThreeContainer}
-      onPress={() => this._openArticle(item)}
+      onPress={() => _openArticle(item)}
     >
       <View style={styles.itemThreeSubContainer}>
         <View style={styles.itemThreeContent}>
-          <Text style={styles.itemThreeBrand}>{item.id}</Text>
+          <Text style={styles.itemThreeBrand}>{Moment(item.created_at).format("MMM Do YY")}{item.id}</Text>
           <View>
-            <Text style={styles.itemThreeTitle}>{item.title}</Text>
+            <Text style={styles.itemThreeTitle}>{item.name}</Text>
             <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
-              {item.title}
+              {item.description}
             </Text>
-          </View>
-          <View style={styles.itemThreeMetaContainer}>
-            <Text style={styles.itemThreePrice}>{item.counting}</Text>
           </View>
         </View>
       </View>
       <View style={styles.itemThreeHr} />
     </TouchableOpacity>
   );
-
-  render(){
-
-    const {rowAll, top10, tabs} = this.props
-    const groupedData = (this.props.tabIndex === 0 ? rowAll : top10)
-    
-    return (
-      <View style={styles.container}>
-        <View style={{ height: 50 }}>
-          <RadioGroup
-            selectedIndex={this.props.tabIndex}
-            items={this.props.tabs}
-            onChange={this.props.setTabIndex}
-            underline
-          />
-        </View>
-        <FlatList
-          distanceBetweenItem = {12}
-          keyExtractor={(item, index) => index.toString()}
-          style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
-          data={groupedData}
-          renderItem={this._getRenderItemFunction()}
-        />
-      </View>
-    );
-  }
+  const {groups} = props
+  return(
+    <View style={styles.container}>
+      {/* <VegaScrollList
+        distanceBetweenItem={12} // Add distance between item. Need to calculate animated
+        data={groups}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={renderRow}
+      /> */}
+      <FlatList   
+        distanceBetweenItem = {12}
+        keyExtractor={(item, index) => index.toString()}
+        style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
+        data={groups}
+        renderItem={renderRow}
+      />
+    </View>
+  )
 }
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

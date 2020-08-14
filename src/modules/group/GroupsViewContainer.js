@@ -1,24 +1,24 @@
 import { compose, lifecycle, withState } from 'recompose';
 import { connect } from 'react-redux';
 
-import GroupsView from './GroupsView';
-import { loadLinks, refreshLinks, getLinkID } from './../../actions/index';
+import GroupsView from './GroupsScreen';
+import { loadGroup, refreshGroup,getGroupID  } from './../../actions/index';
 
 export default  compose(
   connect(
     state => ({
       key_app: state.login.key_app,
+      groups: state.groups.groups
     }),
     dispatch => ({
-      loadlinks: (key_app) => dispatch(loadLinks(key_app)),
-      refreshLinks: (key_app) => dispatch(refreshLinks(key_app)),
-      getLinkID: (id) => dispatch(getLinkID(id)),
+      loadGroup: (key_app) => dispatch(loadGroup(key_app)),
+      refreshGroup: (key_app) => dispatch(refreshGroup(key_app)),
+      getGroupID: (id) => dispatch(getGroupID(id)),
     }),
   ),
   lifecycle({
     componentDidMount() {
-      this.props.loadlinks(this.props.key_app)
+      this.props.loadGroup(this.props.key_app)
     },
   }),
-  withState('tabIndex', 'setTabIndex', 0)
 )(GroupsView);

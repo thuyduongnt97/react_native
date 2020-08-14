@@ -7,6 +7,7 @@ import calendar from '../modules/calendar/CalendarState'
 
 import login from './login'
 import links from './links'
+import groups from './groups'
 import chart from './chart';
 
 export default combineReducers({
@@ -17,4 +18,5 @@ export default combineReducers({
   login,
   links,
   chart,
+  groups,
 });
