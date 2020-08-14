@@ -33,10 +33,6 @@ export default function AvailableInFullVersionScreen(props) {
     ]
   };
   return (
-    // <ImageBackground
-    //   source={require('../../../assets/images/background.png')}
-    //   style={styles.itemThreeContent}
-    // >
     <ScrollView>
       <View style={styles.itemThreeSubContainer}>
         <View style={styles.itemThreeContent}>

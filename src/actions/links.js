@@ -1,6 +1,5 @@
 import * as Types from '../constants/ActionTypes'
 import callApi from './../utils/apiCaller'
-import base64 from 'react-native-base64'
 
 //links
 function startLinksLoading() {
@@ -19,7 +18,7 @@ function clearLinks() {
   return { type: Types.CLEAR_LINKS };
 }
 const actFetchLinksRequest = (key_app) => {
-  key_app = JSON.stringify({"data": key_app})
+  key_app = JSON.stringify({"key_app": key_app})
   return (dispatch) => {
       return callApi('getlink', 'POST', key_app).then(res => {
           dispatch(linksLoaded(res.data))
