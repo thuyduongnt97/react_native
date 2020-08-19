@@ -39,9 +39,6 @@ export function loadItems(day) {
     Object.keys(items).forEach(key => {
       newItems[key] = items[key];
     });
-
-    console.log(newItems);
-
     dispatch(itemsLoaded(newItems));
   };
 }

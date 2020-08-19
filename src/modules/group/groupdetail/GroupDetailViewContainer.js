@@ -2,7 +2,7 @@ import { compose, lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 
 import GroupDetailScreen from './GroupDetailScreen';
-import { loadGroupDetail, refreshGroupDetail, setLinkGroup , setUsersGroup} from './../../../actions/index';
+import { loadGroupDetail, refreshGroupDetail, setLinkGroupChannel , setUsersGroup} from './../../../actions/index';
 
 export default  compose(
     connect(
@@ -13,8 +13,8 @@ export default  compose(
       dispatch => ({
         loadGroupDetail: (group_id)     => dispatch(loadGroupDetail(group_id)),
         refreshGroupDetail: (group_id)  => dispatch(refreshGroupDetail(group_id)),
-        setLinkGroup: (links)           => dispatch(setLinkGroup(links)),
-        setUsersGroup: (users)           => dispatch(setUsersGroup(users)),
+        setLinkGroupChannel: (links)           => dispatch(setLinkGroupChannel(links)),
+        setUsersGroup: (users)          => dispatch(setUsersGroup(users)),
       }),
     ),
     lifecycle({

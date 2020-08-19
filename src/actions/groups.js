@@ -95,12 +95,6 @@ export function refreshGroupDetail(group_id) {
   };
 }
 
-export function setLinkGroup(links) {
-  return {
-    type : Types.SET_LINKS_GROUP,
-    links
-  }
-}//redux Links
 
 export function setUsersGroup(users) {
   return {
@@ -108,3 +102,5 @@ export function setUsersGroup(users) {
     users
   }
 }
+
+

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   View,
   Text,
-  Image,
+  FlatList,
   StyleSheet,
   TouchableOpacity,
   ScrollView
@@ -15,69 +15,60 @@ const linkIcon = require('../../../../assets/images/pages/link.png')
 const fileIcon = require('../../../../assets/images/pages/file.png')
 const userIcon = require('../../../../assets/images/pages/user.webp')
 
-export default function GroupDetailScreen(props) {
+export default function CampaignDetailView(props) {
+  const {campaignDetail} = props
   const item = props.route.params.article
-  const {groupDetail} = props
-  return (
-    <ScrollView>
+
+
+  const _openArticle = (article) => {
+    console.log(article.links);
+    props.setLinkGroupChannel(article.links)
+   props.navigation.navigate('LinksGroup')
+  };
+  
+  const renderRow = ({item}) =>(
+    
+    <TouchableOpacity
+      key={item.id}
+      style={styles.itemThreeContainer}
+      onPress={() => _openArticle(item)}
+    >
       <View style={styles.itemThreeSubContainer}>
         <View style={styles.itemThreeContent}>
           <Text style={styles.itemThreeBrand}>{Moment(item.created_at).format("MMM Do YY")}{item.id}</Text>
           <View>
-            <Text style={styles.itemThreeTitle}>{item.name}</Text>
+            <Text style={styles.itemThreeTitle}>{item.title}</Text>
+            <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
+              {item.description}
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View style={styles.itemThreeHr} />
+    </TouchableOpacity>
+  );
+  return (
+    <ScrollView>
+    {console.log(campaignDetail)}
+      <View style={styles.itemThreeSubContainer}>
+        <View style={styles.itemThreeContent}>
+          <Text style={styles.itemThreeBrand}>{Moment(item.created_at).format("MMM Do YY")}{item.id}</Text>
+          <View>
+            <Text style={styles.itemThreeTitle}>{item.title}</Text>
             <Text style={styles.itemThreeSubtitle} numberOfLines={2}>
               {item.description}
             </Text>
           </View>
         </View>
       </View>
-      <View style={styles.row}>
-        <TouchableOpacity
-          onPress={() => {
-            props.setLinkGroupChannel(groupDetail.group.links)
-            props.navigation.navigate('LinksGroup')
-          }}
-          style={styles.item}
-        >
-          <Image
-            resizeMode="contain"
-            source={linkIcon}
-            style={styles.itemImage}
-          />
-          <Text style={styles.itemText}>{groupDetail.countLink}</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity
-          onPress={() => 
-          {
-            
-            props.navigation.navigate('CampaignGroup')}
-          }
-          style={styles.item}
-        >
-          <Image
-            resizeMode="contain"
-            source={fileIcon}
-            style={styles.itemImage}
-          />
-          <Text style={styles.itemText}>{groupDetail.countCampaign}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            props.setUsersGroup(groupDetail.group.users)
-            props.navigation.navigate('UsersGroup')}
-          }
-         
-          style={styles.item}
-        >
-          <Image
-            resizeMode="contain"
-            source={userIcon}
-            style={styles.itemImage}
-          />
-          <Text style={styles.itemText}>{groupDetail.countUser}</Text>
-        </TouchableOpacity>
+      <View>
+      <FlatList   
+        distanceBetweenItem = {12}
+        keyExtractor={(item, index) => index.toString()}
+        style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
+        data={campaignDetail.campaign.channels}
+        renderItem={renderRow}
+      />
       </View>
     </ScrollView>  
   );

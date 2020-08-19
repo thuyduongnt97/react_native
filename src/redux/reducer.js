@@ -9,7 +9,8 @@ import login from './login'
 import links from './links'
 import groups from './groups'
 import chart from './chart';
-
+import campaigns from './campaigns';
+import channels from './channels';
 export default combineReducers({
   // ## Generator Reducers
   gallery,
@@ -19,4 +20,6 @@ export default combineReducers({
   links,
   chart,
   groups,
+  campaigns,
+  channels
 });
