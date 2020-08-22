@@ -12,12 +12,7 @@ import {
 import Moment from 'moment';
 import { colors, fonts } from '../../styles';
 
-
-
-
 export default function CampaignsScreen (props) {
-
-
   const _openArticle = (article) => {
     props.getCampaignID(article.id)
     props.navigation.navigate('CampaignDetail', {
@@ -48,12 +43,6 @@ export default function CampaignsScreen (props) {
   const {campaigns} = props
   return(
     <View style={styles.container}>
-      {/* <VegaScrollList
-        distanceBetweenItem={12} // Add distance between item. Need to calculate animated
-        data={groups}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderRow}
-      /> */}
       <FlatList   
         distanceBetweenItem = {12}
         keyExtractor={(item, index) => index.toString()}

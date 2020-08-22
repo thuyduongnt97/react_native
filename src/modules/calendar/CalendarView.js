@@ -6,6 +6,7 @@ import { Agenda } from 'react-native-calendars';
 import { colors, fonts } from '../../styles';
 
 class CalendarScreen extends React.Component {
+
   rowHasChanged(r1, r2) {
     return r1.name !== r2.name;
   }
@@ -52,7 +53,9 @@ class CalendarScreen extends React.Component {
           </Text>
         </View>
 
-        <View styleName="horizontal h-start">{labels}</View>
+        <View styleName="horizontal h-start">
+          {labels}
+        </View>
       </View>
     );
   }
