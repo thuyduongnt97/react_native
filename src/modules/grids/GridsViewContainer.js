@@ -20,7 +20,6 @@ export default  compose(
     }),
   ),
   withState('tabIndex', 'setTabIndex', 0),
-  withState('filterTop', 'setFilterTop',[]),
   lifecycle({
     componentDidMount() {
       // this.props.tabs.length > 1 ? 
