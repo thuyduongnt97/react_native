@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { 
     View, 
     Text, 
@@ -8,6 +8,11 @@ import {
     StyleSheet ,
     StatusBar,
 } from 'react-native';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-community/google-signin';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -19,7 +24,47 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 
 const SignInScreen = (props) => {
-    
+    const [loggedIn, setloggedIn] = useState(false);
+    const [userInfo, setuserInfo] = useState([]);
+    _signIn = async () => {
+        try {
+            await GoogleSignin.hasPlayServices();
+            const {accessToken, idToken} = await GoogleSignin.signIn();
+            setloggedIn(true);
+        } catch (error) {
+            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+            // user cancelled the login flow
+            alert('Cancel');
+            } else if (error.code === statusCodes.IN_PROGRESS) {
+            alert('Signin in progress');
+            // operation (f.e. sign in) is in progress already
+            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+            alert('PLAY_SERVICES_NOT_AVAILABLE');
+            // play services not available or outdated
+            } else {
+            // some other error happened
+            }
+        }
+    };
+    useEffect(() => {
+        GoogleSignin.configure({
+          scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
+          webClientId:
+            '866791921051-3ni3lvvh2uno971mtgl9qvimtkoj441n.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+          offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+        });
+      }, []);
+
+    signOut = async () => {
+        try {
+            await GoogleSignin.revokeAccess();
+            await GoogleSignin.signOut();
+            setloggedIn(false);
+            setuserInfo([]);
+        } catch (error) {
+            console.error(error);
+        }
+    };
     const [data, setData] = React.useState({
         email: '',
         pass: '',
@@ -92,12 +137,13 @@ const SignInScreen = (props) => {
         // <AppView />
         props.loadLogin(email, password)
         if(key_app != "confirmed" && key_app != "block" && key_app != false){
-            <AppView />
+            console.log(key_app);
+            props.navigation.navigate('ViewApp');
         }
     }
     const FunctionToOpenSecondActivity = () =>
     {
-        this.props.navigation.navigate('Second');
+        props.navigation.navigate('Second');
         
     }
     return (
@@ -148,8 +194,6 @@ const SignInScreen = (props) => {
                     <Text style={styles.errorMsg}>Username must be 4 characters long.</Text>
                     </Animatable.View>
                 }
-                
-
                 <Text style={[styles.text_footer, {
                     color: colors.text,
                     marginTop: 20
@@ -232,6 +276,25 @@ const SignInScreen = (props) => {
                             color: '#4666cd'
                         }]}>Sign Up</Text>
                     </TouchableOpacity>
+                </View>
+                <View style={styles.body}>
+                    <View style={styles.sectionContainer}>
+                    <GoogleSigninButton
+                        style={{width: 192, height: 48}}
+                        size={GoogleSigninButton.Size.Wide}
+                        color={GoogleSigninButton.Color.Dark}
+                        onPress={this._signIn}
+                    />
+                    </View>
+                    <View style={styles.buttonContainer}>
+                    {!loggedIn && <Text>You are currently logged out</Text>}
+                    {loggedIn && (
+                        <Button
+                        onPress={this.signOut}
+                        title="LogOut"
+                        color="red"></Button>
+                    )}
+                    </View>
                 </View>
             </Animatable.View>
         </View>

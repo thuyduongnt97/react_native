@@ -17,28 +17,6 @@ const iconPages = require('../../../assets/images/drawer/pages.png');
 const iconComponents = require('../../../assets/images/drawer/components.png');
 const iconSettings = require('../../../assets/images/drawer/settings.png');
 
-const drawerData = [
-  // {
-  //   name: 'Home sdsdsd',
-  //   icon: iconHome,
-  // },
-  // {
-  //   name: 'Calendar',
-  //   icon: iconCalendar,
-  // },
-  // {
-  //   name: 'Grids',
-  //   icon: iconGrids,
-  // },
-  // {
-  //   name: 'Pages',
-  //   icon: iconPages,
-  // },
-  // {
-  //   name: 'Components',
-  //   icon: iconComponents,
-  // },
-];
 
 const Drawer = createDrawerNavigator();
 

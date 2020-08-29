@@ -1,7 +1,7 @@
 import { compose, lifecycle } from 'recompose';
 import { Platform, UIManager } from 'react-native';
 
-import AppView from './AppView';
+import AppLogin from './AppLogin';
 
 export default compose(
   lifecycle({
@@ -13,4 +13,4 @@ export default compose(
       }
     },
   }),
-)(AppView);
+)(AppLogin);

@@ -6,36 +6,63 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 // import VegaScrollList from 'react-native-vega-scroll-list';
 import Moment from 'moment';
+import { Searchbar } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { colors, fonts } from '../../styles';
 
 
 
-
 export default function GroupsScreen (props) {
+  const [query, setQuery] = useState('');
+  const [filteredCountryList, setFilteredCountryList] = useState(countryList)
+  const countryList = () => {
+    console.log(props.groups)
+    const dataFilter = props.groups.filter(item => {
+      return item.title.indexOf(query) > -1;    
+    })
+    setFilteredCountryList(dataFilter)
+  }
+  const _renderHeader = () => {  
+    return(  
+      <Searchbar        
+        placeholder="Type Here..."        
+        lightTheme        
+        round
+        style={styles.searchBar} 
+        onChangeText={setQuery}
+        value={query}
+        autoCorrect={false}             
+      />    
+    )
+  };
   const _openArticle = (article) => {
     props.getGroupID(article.id)
     props.navigation.navigate('GroupDetail', {
       article,
     });
   };
-  
   const renderRow = ({item}) =>(
     <TouchableOpacity
       key={item.id}
-      style={styles.itemThreeContainer}
+      style={styles.SectionListItemStyle}
       onPress={() => _openArticle(item)}
     >
       <View style={styles.itemThreeSubContainer}>
         <View style={styles.itemThreeContent}>
-          <Text style={styles.itemThreeBrand}>{Moment(item.created_at).format("MMM Do YY")}{item.id}</Text>
           <View>
             <Text style={styles.itemThreeTitle}>{item.name}</Text>
             <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
               {item.description}
+            </Text>
+          </View>
+          <View>
+            <Text>Role: 
+              <Icon name="link" size={20} color="#dd4b39" />{"  "}
+              <Icon name="users" size={20} color="#f39c12" />{"  "}
+              <Icon name="files-o" size={20} color="#00a65a" />
             </Text>
           </View>
         </View>
@@ -46,19 +73,18 @@ export default function GroupsScreen (props) {
   const {groups} = props
   return(
     <View style={styles.container}>
-      {/* <VegaScrollList
-        distanceBetweenItem={12} // Add distance between item. Need to calculate animated
-        data={groups}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderRow}
-      /> */}
-      <FlatList   
-        distanceBetweenItem = {12}
-        keyExtractor={(item, index) => index.toString()}
-        style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
-        data={groups}
-        renderItem={renderRow}
-      />
+      <View style={styles.linkItem}>
+    
+        <FlatList   
+          distanceBetweenItem = {12}
+          keyExtractor={(item, index) => index.toString()}
+          style={{ backgroundColor: colors.white,  }}
+          data={filteredCountryList}
+          renderItem={renderRow}
+          ListHeaderComponent={_renderHeader}
+          stickyHeaderIndices={[0]}
+        />
+      </View>
     </View>
   )
 }
@@ -66,143 +92,45 @@ export default function GroupsScreen (props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: colors.white,
+    paddingHorizontal: 5
   },
-  tabsContainer: {
-    alignSelf: 'stretch',
-    marginTop: 30,
+  searchBar:{
+    textTransform: 'uppercase',
+    marginLeft: -40
   },
-  itemOneContainer: {
-    flex: 1,
-    width: Dimensions.get('window').width / 2 - 40,
-  },
-  itemOneImageContainer: {
-    borderRadius: 3,
-    overflow: 'hidden',
-  },
-  itemOneImage: {
-    height: 200,
-    width: Dimensions.get('window').width / 2 - 40,
-  },
-  itemOneTitle: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 15,
-  },
-  itemOneSubTitle: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 13,
-    color: '#B2B2B2',
-    marginVertical: 3,
-  },
-  itemOnePrice: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 15,
-  },
-  itemOneRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 10,
-  },
-  itemOneContent: {
-    marginTop: 5,
-    marginBottom: 10,
-  },
-  itemTwoContainer: {
-    paddingBottom: 10,
-    backgroundColor: 'white',
-    marginVertical: 5,
-  },
-  itemTwoContent: {
-    padding: 20,
-    position: 'relative',
-    marginHorizontal: Platform.OS === 'ios' ? -15 : 0,
-    height: 150,
-  },
-  itemTwoTitle: {
-    color: colors.white,
-    fontFamily: fonts.primaryBold,
-    fontSize: 20,
-  },
-  itemTwoSubTitle: {
-    color: colors.white,
-    fontFamily: fonts.primaryRegular,
-    fontSize: 15,
-    marginVertical: 5,
-  },
-  itemTwoPrice: {
-    color: colors.white,
-    fontFamily: fonts.primaryBold,
-    fontSize: 20,
-  },
-  itemTwoImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  itemTwoOverlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundColor: '#6271da',
-    opacity: 0.5,
-  },
-  itemThreeContainer: {
-    backgroundColor: 'white',
+  SectionHeaderStyle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: '#fff',
+    margin: 10,
+    textAlign: 'center'
   },
   itemThreeSubContainer: {
-    // flexDirection: 'row',
     paddingVertical: 10,
   },
-  itemThreeImage: {
-    height: 100,
-    width: 100,
-  },
-  itemThreeContent: {
-    flex: 1,
-    paddingLeft: 15,
-    justifyContent: 'space-between',
-  },
-  itemThreeBrand: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 14,
-    color: '#617ae1',
+  SectionListItemStyle: {
+    paddingLeft: 3,
+    paddingRight: 3,
+    fontSize: 15,
+    color: '#000',
+    backgroundColor: '#F5F5F5',
   },
   itemThreeTitle: {
+    paddingTop: 3,
     fontFamily: fonts.primaryBold,
     fontSize: 16,
-    color: '#5F5F5F',
+    color: '#000',
   },
   itemThreeSubtitle: {
+    paddingTop: 3,
     fontFamily: fonts.primaryRegular,
     fontSize: 12,
     color: '#a4a4a4',
   },
-  itemThreeMetaContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  itemThreePrice: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 15,
-    color: '#5f5f5f',
-    textAlign: 'right',
-  },
   itemThreeHr: {
-    flex: 1,
     height: 1,
     backgroundColor: '#e3e3e3',
     marginRight: -15,
-  },
-  badge: {
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
   },
 });

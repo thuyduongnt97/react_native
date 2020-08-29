@@ -50,7 +50,6 @@ export default function GroupDetailScreen(props) {
         <TouchableOpacity
           onPress={() => 
           {
-            
             props.navigation.navigate('CampaignGroup')}
           }
           style={styles.item}

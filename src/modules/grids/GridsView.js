@@ -23,6 +23,7 @@ export default class  GridsScreen extends React.Component {
       filterTop: props.top10
     }
   }
+
   // filter search
   searchFilterFunction = text => {
     if(this.props.tabIndex === 0)
@@ -87,12 +88,12 @@ export default class  GridsScreen extends React.Component {
             </Text>
           </View>
           <View style={styles.itemThreeMetaContainer}>
-            <View style={{flex:2,flexDirection:"row",justifyContent:'space-between'}}>
-              <View style={{flex:1, }}>
+            <View style={{flex:1,flexDirection:"row",justifyContent:'space-between'}}>
+              <View >
               <Text style={{color: "#ff0000" }}>s.admicro.vn/{item.alias}</Text>
               </View>
-              <View style={{flex:1}}>
-                <Text style={{textAlign:"right", paddingRight: 5}}>
+              <View >
+                <Text style={{ paddingRight: 5}}>
                   {item.counting+"  "}  
                   <Icon name="stats" size = {20}/>
                 </Text>
@@ -141,7 +142,7 @@ export default class  GridsScreen extends React.Component {
           <FlatList
             distanceBetweenItem = {12}
             keyExtractor={(item, index) => index.toString()}
-            style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
+            style={{ backgroundColor: colors.white }}
             data={filterTop}
             renderItem={this.renderRow}
             ListHeaderComponent={this._renderHeader}
@@ -164,7 +165,6 @@ const styles = StyleSheet.create({
   },
   linkItem:{
     flex:14,
-
   },
   searchBar:{
     textTransform: 'uppercase',
@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   itemThreeSubContainer: {
-    flexDirection: 'row',
     paddingVertical: 10,
   },
   SectionListItemStyle: {
@@ -189,7 +188,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   itemThreeMetaContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     flex:6,
     justifyContent: 'space-between',
     alignItems: 'center',

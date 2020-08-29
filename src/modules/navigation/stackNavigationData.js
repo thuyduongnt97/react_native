@@ -19,6 +19,7 @@ import GridsViewContainer from './../grids/GridsViewContainer';
 import UsersViewContainer from '../group/users/UsersViewContainer';
 import CampaignDetailViewContainer from '../campaigns/detail/CampaignDetailViewContainer';
 import CampaignsViewContainer from '../campaigns/CampaignsViewContainer';
+import AppViewContainer from '../AppViewContainer';
 
 const headerLeftComponent = (props) => {
   return (
