@@ -49,3 +49,11 @@ export function getLinkID(linkID) {
     linkID
   }
 }
+
+
+export function setLinkGroupChannel(links) {
+  return {
+    type : Types.SET_LINKS_GROUP_CHANNEL,
+    links
+  }
+}//redux Links

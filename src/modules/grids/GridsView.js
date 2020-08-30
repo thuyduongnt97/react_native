@@ -1,4 +1,4 @@
-import React , {useState, useEffect} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
@@ -7,15 +7,65 @@ import {
   FlatList,
   TouchableOpacity,
   Dimensions,
+  SectionList,
 } from 'react-native';
-
 import { colors, fonts } from '../../styles';
-
 import { RadioGroup } from '../../components';
-import { isSet, isNull } from 'lodash';
+import { Searchbar } from 'react-native-paper';
+import { rgb } from 'd3';
+import Icon from 'react-native-ionicons';
 
 export default class  GridsScreen extends React.Component {
-  _getRenderItemFunction = () => [this.renderRow, this.renderRow][this.props.tabIndex]
+  constructor(props) {
+    super(props)
+    this.state = {
+      filterRowAll: props.rowAll,
+      filterTop: props.top10
+    }
+  }
+
+  // filter search
+  searchFilterFunction = text => {
+    if(this.props.tabIndex === 0)
+    {
+      const result = []
+      this.props.rowAll.forEach(item => {
+        const data = item.data.filter(val => {
+          return val.title.indexOf(text) > -1
+        })
+        if(data.length > 0)
+        {
+          result.push({
+            title : item.title,
+            data: data
+          })
+        }
+      });
+      this.setState({ 
+        filterRowAll: result
+      }) 
+    }
+    else{
+      this.setState({ 
+        filterTop : this.props.top10.filter(item => {
+          return item.title.indexOf(text) > -1;    
+        })
+      })
+    }
+  }
+
+  _renderHeader = () => {  
+    return(  
+      <Searchbar        
+        placeholder="Type Here..."        
+        lightTheme        
+        round
+        style={styles.searchBar} 
+        onChangeText={text => this.searchFilterFunction(text)}
+        autoCorrect={false}             
+      />    
+    )
+  };
 
   _openArticle = (article) => {
     this.props.getLinkID(article.id)
@@ -26,49 +76,80 @@ export default class  GridsScreen extends React.Component {
   renderRow = ({item}) =>(
     <TouchableOpacity
       key={item.id}
-      style={styles.itemThreeContainer}
+      style={styles.SectionListItemStyle}
       onPress={() => this._openArticle(item)}
     >
       <View style={styles.itemThreeSubContainer}>
         <View style={styles.itemThreeContent}>
-          <Text style={styles.itemThreeBrand}>{item.id}</Text>
           <View>
             <Text style={styles.itemThreeTitle}>{item.title}</Text>
             <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
-              {item.title}
+              {item.long_url}
             </Text>
           </View>
           <View style={styles.itemThreeMetaContainer}>
-            <Text style={styles.itemThreePrice}>{item.counting}</Text>
+            <View style={{flex:1,flexDirection:"row",justifyContent:'space-between'}}>
+              <View >
+              <Text style={{color: "#ff0000" }}>s.admicro.vn/{item.alias}</Text>
+              </View>
+              <View >
+                <Text style={{ paddingRight: 5}}>
+                  {item.counting+"  "}  
+                  <Icon name="stats" size = {20}/>
+                </Text>
+                
+              </View>
+            </View>
           </View>
         </View>
       </View>
       <View style={styles.itemThreeHr} />
     </TouchableOpacity>
   );
-
+  
   render(){
 
-    const {rowAll, top10, tabs} = this.props
-    const groupedData = (this.props.tabIndex === 0 ? rowAll : top10)
-    
+    const {tabs, tabIndex, setTabIndex} = this.props
+    const {filterRowAll, filterTop} = this.state
+   
     return (
       <View style={styles.container}>
-        <View style={{ height: 50 }}>
+        <View style={styles.radioSelectLink}>
           <RadioGroup
-            selectedIndex={this.props.tabIndex}
-            items={this.props.tabs}
-            onChange={this.props.setTabIndex}
+            selectedIndex={tabIndex}
+            items={tabs}
+            onChange={setTabIndex}
             underline
           />
         </View>
-        <FlatList
-          distanceBetweenItem = {12}
-          keyExtractor={(item, index) => index.toString()}
-          style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
-          data={groupedData}
-          renderItem={this._getRenderItemFunction()}
-        />
+        <View style={styles.linkItem}>
+        {tabIndex === 0 ? 
+          <View style = {{flex:1}}>
+            <SectionList
+              sections={filterRowAll}
+              keyExtractor={(item, index) => item.title}
+              renderItem={this.renderRow}
+              renderSectionHeader={({ section: { title } }) => (
+                <View style = {{flex: 1, backgroundColor: rgb(77,120,140)}}>
+                  <Text style={styles.SectionHeaderStyle}>{title}</Text>
+                </View>
+              )}
+              ListHeaderComponent={this._renderHeader}
+              stickySectionHeadersEnabled={true}
+            />
+          </View>
+          :
+          <FlatList
+            distanceBetweenItem = {12}
+            keyExtractor={(item, index) => index.toString()}
+            style={{ backgroundColor: colors.white }}
+            data={filterTop}
+            renderItem={this.renderRow}
+            ListHeaderComponent={this._renderHeader}
+            stickyHeaderIndices={[0]}
+          />
+        }
+        </View>
       </View>
     );
   }
@@ -78,140 +159,57 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
-  tabsContainer: {
-    alignSelf: 'stretch',
-    marginTop: 30,
+  radioSelectLink:{
+    flex:1,
+    backgroundColor: colors.bluish
   },
-  itemOneContainer: {
-    flex: 1,
-    width: Dimensions.get('window').width / 2 - 40,
+  linkItem:{
+    flex:14,
   },
-  itemOneImageContainer: {
-    borderRadius: 3,
-    overflow: 'hidden',
+  searchBar:{
+    textTransform: 'uppercase',
+    marginLeft: -40
   },
-  itemOneImage: {
-    height: 200,
-    width: Dimensions.get('window').width / 2 - 40,
-  },
-  itemOneTitle: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 15,
-  },
-  itemOneSubTitle: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 13,
-    color: '#B2B2B2',
-    marginVertical: 3,
-  },
-  itemOnePrice: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 15,
-  },
-  itemOneRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 10,
-  },
-  itemOneContent: {
-    marginTop: 5,
-    marginBottom: 10,
-  },
-  itemTwoContainer: {
-    paddingBottom: 10,
-    backgroundColor: 'white',
-    marginVertical: 5,
-  },
-  itemTwoContent: {
-    padding: 20,
-    position: 'relative',
-    marginHorizontal: Platform.OS === 'ios' ? -15 : 0,
-    height: 150,
-  },
-  itemTwoTitle: {
-    color: colors.white,
-    fontFamily: fonts.primaryBold,
-    fontSize: 20,
-  },
-  itemTwoSubTitle: {
-    color: colors.white,
-    fontFamily: fonts.primaryRegular,
-    fontSize: 15,
-    marginVertical: 5,
-  },
-  itemTwoPrice: {
-    color: colors.white,
-    fontFamily: fonts.primaryBold,
-    fontSize: 20,
-  },
-  itemTwoImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  itemTwoOverlay: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    backgroundColor: '#6271da',
-    opacity: 0.5,
-  },
-  itemThreeContainer: {
-    backgroundColor: 'white',
+  SectionHeaderStyle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: '#fff',
+    margin: 10,
+    textAlign: 'center'
   },
   itemThreeSubContainer: {
-    // flexDirection: 'row',
     paddingVertical: 10,
   },
-  itemThreeImage: {
-    height: 100,
-    width: 100,
-  },
-  itemThreeContent: {
-    flex: 1,
-    paddingLeft: 15,
-    justifyContent: 'space-between',
-  },
-  itemThreeBrand: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 14,
-    color: '#617ae1',
-  },
-  itemThreeTitle: {
-    fontFamily: fonts.primaryBold,
-    fontSize: 16,
-    color: '#5F5F5F',
-  },
-  itemThreeSubtitle: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 12,
-    color: '#a4a4a4',
+  SectionListItemStyle: {
+    paddingLeft: 3,
+    paddingRight: 3,
+    fontSize: 15,
+    color: '#000',
+    backgroundColor: '#F5F5F5',
   },
   itemThreeMetaContainer: {
     flexDirection: 'row',
+    flex:6,
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingTop: 3,
   },
-  itemThreePrice: {
+  itemThreeTitle: {
+    paddingTop: 3,
+    fontFamily: fonts.primaryBold,
+    fontSize: 16,
+    color: '#000',
+  },
+  itemThreeSubtitle: {
+    paddingTop: 3,
     fontFamily: fonts.primaryRegular,
-    fontSize: 15,
-    color: '#5f5f5f',
-    textAlign: 'right',
+    fontSize: 12,
+    color: '#a4a4a4',
   },
   itemThreeHr: {
     flex: 1,
     height: 1,
     backgroundColor: '#e3e3e3',
     marginRight: -15,
-  },
-  badge: {
-    backgroundColor: colors.white,
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
   },
 });

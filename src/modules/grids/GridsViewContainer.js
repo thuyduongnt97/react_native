@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import GridView from './GridsView';
 import { loadLinks, refreshLinks, getLinkID } from './../../actions/index';
-import { isNull } from 'lodash';
 
 export default  compose(
   connect(
@@ -20,11 +19,12 @@ export default  compose(
       getLinkID: (id) => dispatch(getLinkID(id)),
     }),
   ),
+  withState('tabIndex', 'setTabIndex', 0),
   lifecycle({
     componentDidMount() {
-      console.log(this.props.tabs)
-      this.props.tabs.length > 1 ? this.props.loadlinks(this.props.key_app) : ''
+      // this.props.tabs.length > 1 ? 
+      this.props.loadlinks(this.props.key_app)
+      //  : ''
     },
-  }),
-  withState('tabIndex', 'setTabIndex', 0)
+  })
 )(GridView);

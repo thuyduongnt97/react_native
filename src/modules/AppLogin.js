@@ -1,6 +1,6 @@
 import React from 'react';
 import LoginViewContainer from './auth/LoginViewContainer'
 
-export default function AppView() {
+export default function AppLogin() {
     return <LoginViewContainer />
 }

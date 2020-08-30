@@ -31,7 +31,7 @@ const links = (state = initialState, action) => {
           return Object.assign({}, state, {
             linkID: action.linkID,
           });
-        case Types.SET_LINKS_GROUP:
+        case Types.SET_LINKS_GROUP_CHANNEL:
           return Object.assign({}, state, {
             rowAll: action.links,
             top10: [],

@@ -17,6 +17,9 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import { colors, fonts } from '../../styles';
 import GridsViewContainer from './../grids/GridsViewContainer';
 import UsersViewContainer from '../group/users/UsersViewContainer';
+import CampaignDetailViewContainer from '../campaigns/detail/CampaignDetailViewContainer';
+import CampaignsViewContainer from '../campaigns/CampaignsViewContainer';
+import AppViewContainer from '../AppViewContainer';
 
 const headerLeftComponent = (props) => {
   return (
@@ -86,17 +89,6 @@ const StackNavigationData = [
     },
   },
   {
-    name: 'Article',
-    component: AvailableInFullVersion,
-    headerLeft: headerLeftComponent,
-    headerBackground: { source: headerBackground },
-    headerTitleStyle: {
-      fontFamily: fonts.primaryRegular,
-      color: colors.white,
-      fontSize: 18,
-    },
-  },
-  {
     name: 'GroupDetail',
     component: GroupDetailScreen,
     headerLeft: headerLeftComponent,
@@ -118,9 +110,30 @@ const StackNavigationData = [
       fontSize: 18,
     },
   },
-  
   {
-    name: 'Chat',
+    name: 'CampaignGroup',
+    component: CampaignsViewContainer,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+    headerTitleStyle: {
+      fontFamily: fonts.primaryRegular,
+      color: colors.white,
+      fontSize: 18,
+    },
+  },
+  {
+    name: 'CampaignDetail',
+    component: CampaignDetailViewContainer,
+    headerLeft: headerLeftComponent,
+    headerBackground: { source: headerBackground },
+    headerTitleStyle: {
+      fontFamily: fonts.primaryRegular,
+      color: colors.white,
+      fontSize: 18,
+    },
+  },
+  {
+    name: 'Article',
     component: AvailableInFullVersion,
     headerLeft: headerLeftComponent,
     headerBackground: { source: headerBackground },

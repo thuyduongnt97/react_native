@@ -34,20 +34,22 @@ export default function NavigatorView(props) {
 
   return (
     <Stack.Navigator>
-      {StackNavigationData.map((item, idx) => (
-        <Stack.Screen
-          key={`stack_item-${idx+1}`}
-          name={item.name} 
-          component={item.component} 
-          options={{
-            headerLeft: item.headerLeft || headerLeftComponentMenu,
-            headerBackground: () => (
-              <Image style={styles.headerImage} source={item.headerBackground.source} />
-            ),
-            headerTitleStyle: item.headerTitleStyle,
-          }} 
-        />
-      ))}
+      {StackNavigationData.map((item, idx) => 
+        (
+          <Stack.Screen
+            key={`stack_item-${idx+1}`}
+            name={item.name} 
+            component={item.component} 
+            options={{
+              headerLeft: item.headerLeft || headerLeftComponentMenu,
+              headerBackground: () => (
+                <Image style={styles.headerImage} source={item.headerBackground.source} />
+              ),
+              headerTitleStyle: item.headerTitleStyle,
+            }} 
+          />
+        )
+      )}
     </Stack.Navigator>
   );
 }

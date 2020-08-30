@@ -13,6 +13,8 @@ import {
 import { fonts, colors } from '../../styles';
 import { Button } from '../../components';
 import Moment from 'moment';
+import Icon from 'react-native-ionicons';
+
 import {
   BarChart,
   PieChart
@@ -34,33 +36,33 @@ export default function AvailableInFullVersionScreen(props) {
   };
   return (
     <ScrollView>
-      <View style={styles.itemThreeSubContainer}>
+     <View style={styles.itemThreeSubContainer}>
         <View style={styles.itemThreeContent}>
-          <Text style={styles.itemThreeBrand}>{Moment(item.created_at).format("MMM Do YY")}{item.id}</Text>
           <View>
             <Text style={styles.itemThreeTitle}>{item.title}</Text>
-            <Text style={styles.itemThreeSubtitle} numberOfLines={2}>
+            <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
               {item.long_url}
             </Text>
           </View>
           <View style={styles.itemThreeMetaContainer}>
-            <View
-              style={[
-                styles.badge,
-              ]}
-            >
-              <Text
-                style={{ fontSize: 10, color: colors.white }}
-                styleName="bright"
-              >
-              </Text>
+            <View style={{flex:2,flexDirection:"row",justifyContent:'space-between'}}>
+              <View style={{flex:1, }}>
+              <Text style={{color: "#ff0000" }}>s.admicro.vn/{item.alias}</Text>
+              </View>
+              <View style={{flex:1}}>
+                <Text style={{textAlign:"right", paddingRight: 5}}>
+                  {item.counting+"  "}  
+                  <Icon name="stats" size = {20}/>
+                </Text>
+                
+              </View>
             </View>
-           
-            <Text style={styles.itemThreePrice}>{item.counting}</Text>
           </View>
         </View>
       </View>
-      <View style={styles.container_chart}>
+
+      <View style={styles.container_Barchart}>
+        <Text></Text>
         <BarChart
           data={data}
           width={screenWidth}
@@ -70,54 +72,70 @@ export default function AvailableInFullVersionScreen(props) {
           verticalLabelRotation={35}//độ nghiêng của label
         />
       </View>
-      <View style={styles.container_chart}>
-      <PieChart
-        data={data_referer}
-        width={screenWidth}
-        height={220}
-        chartConfig={chartConfig}
-        accessor="population"
-        backgroundColor="transparent"
-        paddingLeft="15"
-        absolute
-      />
+      <View >
+        <View >
+          <Text style={styles.titleChart}>REFERRERS</Text>
+          <View style={styles.container_chart }>
+            <PieChart
+              data={data_referer}
+              width={screenWidth}
+              height={220}
+              chartConfig={chartConfig}
+              accessor="population"
+              backgroundColor="transparent"
+              paddingLeft="15"
+              absolute
+            />
+          </View>
+          
+        </View>
+        <View >
+          <Text style={styles.titleChart}>LOCATIONS</Text>
+          <View style={styles.container_chart}>
+            <PieChart
+              data={data_location}
+              width={screenWidth}
+              height={220}
+              chartConfig={chartConfig}
+              accessor="population"
+              backgroundColor="transparent"
+              paddingLeft="15"
+              absolute
+            />
+          </View> 
+        </View>
+        <View>
+          <Text style={styles.titleChart}>DEVICES</Text>
+          <View style={styles.container_chart}>
+            <PieChart
+              data={data_os}
+              width={screenWidth}
+              height={220}
+              chartConfig={chartConfig}
+              accessor="population"
+              backgroundColor="transparent"
+              paddingLeft="15"
+              absolute
+            />
+          </View>
+        </View>
+        <View>
+          <Text style={styles.titleChart}>BROWSERS</Text>
+          <View style={styles.container_chart}>
+            <PieChart
+              data={data_browser}
+              width={screenWidth}
+              height={220}
+              chartConfig={chartConfig}
+              accessor="population"
+              backgroundColor="transparent"
+              paddingLeft="15"
+              absolute
+            />
+          </View>
+        </View>
       </View>
-      <View style={styles.container_chart}>
-      <PieChart
-        data={data_location}
-        width={screenWidth}
-        height={220}
-        chartConfig={chartConfig}
-        accessor="population"
-        backgroundColor="transparent"
-        paddingLeft="15"
-        absolute
-      />
-      </View>
-      <View style={styles.container_chart}>
-      <PieChart
-        data={data_os}
-        width={screenWidth}
-        height={220}
-        chartConfig={chartConfig}
-        accessor="population"
-        backgroundColor="transparent"
-        paddingLeft="15"
-        absolute
-      />
-      </View>
-      <View style={styles.container_chart}>
-      <PieChart
-        data={data_browser}
-        width={screenWidth}
-        height={220}
-        chartConfig={chartConfig}
-        accessor="population"
-        backgroundColor="transparent"
-        paddingLeft="15"
-        absolute
-      />
-      </View>
+      
     </ScrollView>  
 );
 }
@@ -141,66 +159,45 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     padding: 5,
   },
+  container_Barchart:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 10
+  },
   container_chart: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  nerdImage: {
-    width: 80,
-    height: 80,
-  },
-  availableText: {
-    color: colors.white,
-    fontFamily: fonts.primaryRegular,
-    fontSize: 40,
-    marginVertical: 3,
-  },
-  textContainer: {
-    alignItems: 'center',
-  },
-  buttonsContainer: {
-    alignItems: 'center',
-    alignSelf: 'stretch',
-  },
-  button: {
-    alignSelf: 'stretch',
-    marginBottom: 20,
-  },
+
   itemThreeSubContainer: {
     flexDirection: 'row',
-    padding: 10
+    paddingVertical: 10,
+    padding: 5,
   },
-  itemThreeImage: {
-    height: 100,
-    width: 100,
-  },
- 
-  
-  itemThreeContent: {
-    flex: 1,
+  itemThreeMetaContainer: {
+    flexDirection: 'column',
+    flex:6,
     justifyContent: 'space-between',
-  },
-  itemThreeBrand: {
-    fontFamily: fonts.primaryRegular,
-    fontSize: 14,
-    color: '#617ae1',
+    alignItems: 'center',
+    paddingTop: 3,
   },
   itemThreeTitle: {
+    paddingTop: 3,
     fontFamily: fonts.primaryBold,
     fontSize: 16,
-    color: '#5F5F5F',
+    color: '#000',
   },
   itemThreeSubtitle: {
+    paddingTop: 3,
     fontFamily: fonts.primaryRegular,
     fontSize: 12,
     color: '#a4a4a4',
   },
-  itemThreeMetaContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
- 
- 
+  titleChart:{
+    textAlign: "left",
+    fontWeight: 'bold',
+    paddingLeft: 10
+  }
 });
